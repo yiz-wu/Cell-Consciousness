@@ -12,8 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EsercizioBroadcastReceiver">
-        <activity android:name="com.example.ProgettoAMIF.TransparentActivity" android:theme="@style/MyTranslucentTheme"></activity>
-        <activity android:name="com.example.ProgettoAMIF.MainActivity">
+        <activity android:name="com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.TransparentActivity" android:theme="@style/MyTranslucentTheme"></activity>
+        <activity android:name="com.example.ProgettoAMIF.UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,15 +21,10 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.example.broadcast.PhoneUnlockedReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.USER_UNLOCKED" />
-            </intent-filter>
-        </receiver>
 
-        <service android:name="com.example.services.TouchDetectService" />
-        <service android:name="com.example.model.FasciaOrariaExecutor" />
-        <service android:name="com.example.CancelNotificationAndGoHomeScreen" />
+        <service android:name="com.example.ProgettoAMIF.model.detectors.TouchDetectService" />
+        <service android:name="com.example.ProgettoAMIF.model.FasciaOrariaExecutor" />
+        <service android:name="com.example.ProgettoAMIF.model.notificationService.statusBarSystem.CancelNotificationAndGoHomeScreen" />
 
     </application>
 

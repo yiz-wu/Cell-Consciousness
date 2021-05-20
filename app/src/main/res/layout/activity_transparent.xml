@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context="com.example.ProgettoAMIF.TransparentActivity">
+    tools:context="com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.TransparentActivity">
 
 <!--    <TextView-->
 <!--        android:id="@+id/textView"-->

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context="com.example.ProgettoAMIF.MainActivity">
+    tools:context="com.example.ProgettoAMIF.UI.MainActivity">
 
     <TextView
         android:id="@+id/tvMsg"
@@ -54,19 +54,19 @@
         />
 
     <Button
-        android:id="@+id/bDIALOG"
+        android:id="@+id/bSTART"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="open dialog"
+        android:text="start service"
         android:textSize="20dp"
         android:layout_marginTop="10dp"
         />
 
     <Button
-        android:id="@+id/bOPEN"
+        android:id="@+id/bSTOP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="open transparent activity"
+        android:text="stop service"
         android:textSize="20dp"
         android:layout_marginTop="10dp"
         />

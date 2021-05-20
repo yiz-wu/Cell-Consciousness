@@ -7,7 +7,7 @@
     <string name="cancel">CANCEL!!!</string>
     <string name="dialog_fire_title">ALERT :</string>
     <string name="wait">WAIT?</string>
-    <string name="TouchDetected">abc</string>
-    <string name="ScreenUnlocked">zxc</string>
-    <string name="AccelerometerChanged">qwe</string>
+    <string name="TouchDetected">TouchDetected</string>
+    <string name="ScreenUnlocked">ScreenUnlocked</string>
+    <string name="AccelerometerChanged">AccelerometerChanged</string>
 </resources>
