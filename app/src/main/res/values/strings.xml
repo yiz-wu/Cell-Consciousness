@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ProgettoAMIF</string>
+    <string name="my_special_action">ALSKDJLAKSDJ</string>
+    <string name="MSG_STRING">quello che vuoi</string>
+    <string name="dialog_fire_missiles">U really want to fare missile?</string>
+    <string name="fire">FIRE!!!</string>
+    <string name="cancel">CANCEL!!!</string>
+    <string name="dialog_fire_title">ALERT :</string>
+    <string name="wait">WAIT?</string>
+    <string name="TouchDetected">abc</string>
+    <string name="ScreenUnlocked">zxc</string>
+    <string name="AccelerometerChanged">qwe</string>
+</resources>

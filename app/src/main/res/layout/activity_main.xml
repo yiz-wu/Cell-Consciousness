@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context="com.example.ProgettoAMIF.MainActivity">
+
+    <TextView
+        android:id="@+id/tvMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Esercizio Broadcast : mandare un intento in broadcast"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Inserisci il messaggio..."
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <Button
+        android:id="@+id/bSEND"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SEND"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <Button
+        android:id="@+id/bNOTIFICATION"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send notification"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <Button
+        android:id="@+id/bASK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ask Permission"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <Button
+        android:id="@+id/bDIALOG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="open dialog"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <Button
+        android:id="@+id/bOPEN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="open transparent activity"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        />
+
+
+
+
+</LinearLayout>
