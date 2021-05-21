@@ -7,9 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.MotionEventCompat;
 
-import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -31,7 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ProgettoAMIF.model.FasciaOrariaExecutor;
-import com.example.ProgettoAMIF.model.detectors.ScreenOnOffBroadcastReceiver;
+import com.example.ProgettoAMIF.model.detectors.ScreenUnlockBroadcastReceiver;
 import com.example.eserciziobroadcastreceiver.R;
 import com.example.ProgettoAMIF.model.notificationService.statusBarSystem.StatusBarNotification;
 import com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.TransparentActivity;
@@ -68,9 +66,9 @@ public class MainActivity extends AppCompatActivity{
         bSTART = findViewById(R.id.bSTART);
         bSTOP = findViewById(R.id.bSTOP);
 
-        initScreenReceiver();
+//        initScreenReceiver();
         initPermissionButton();
-        initNotificationButton();
+//        initNotificationButton();
 
 
 
@@ -88,19 +86,23 @@ public class MainActivity extends AppCompatActivity{
         bSTART.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(TAG, "onClick of START button");
                 Intent intent = new Intent(context, FasciaOrariaExecutor.class);
                 intent.putExtra("Name", "TextName");
                 intent.putExtra("TipoNotifica", 0);
                 startService(intent);
+                Log.i(TAG, "onClick of START button : intent sent.");
             }
         });
 
         bSTOP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(TAG, "onClick of STOP button");
                 Intent intent = new Intent(context, FasciaOrariaExecutor.class);
                 intent.putExtra("stop", "stop");
                 startService(intent);
+                Log.i(TAG, "onClick of STOP button : intent sent.");
             }
         });
 
@@ -200,10 +202,12 @@ public class MainActivity extends AppCompatActivity{
                 if (!Settings.canDrawOverlays(MainActivity.this)) {
                     Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
                     startActivityForResult(intent, 0);
+                } else {
+                    Toast.makeText(MainActivity.this, "Permission already granted", Toast.LENGTH_SHORT).show();
                 }
 
                 // ask for camera permission
-                askPermission(Manifest.permission.CAMERA, 1);
+//                askPermission(Manifest.permission.CAMERA, 1);
             }
         });
     }
@@ -226,7 +230,7 @@ public class MainActivity extends AppCompatActivity{
         screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
         screenFilter.addAction(Intent.ACTION_USER_PRESENT);
 
-        screenReceiver = new ScreenOnOffBroadcastReceiver(this);
+        screenReceiver = new ScreenUnlockBroadcastReceiver(this);
         registerReceiver(screenReceiver, screenFilter);
 
     }
@@ -263,29 +267,30 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        int action = MotionEventCompat.getActionMasked(event);
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        int action = MotionEventCompat.getActionMasked(event);
+//
+//        switch (action) {
+//            case (MotionEvent.ACTION_DOWN):
+//                Log.i(TAG, "onTouchEvent : Action was DOWN");
+//                return true;    // return false   if you want ignore this motionevent in future, so it's MOVE and UP will not be caught
+//            case (MotionEvent.ACTION_MOVE):
+//                Log.i(TAG, "Action was MOVE");
+//                return true;
+//            case (MotionEvent.ACTION_UP):
+//                Log.i(TAG, "Action was UP");
+//                return true;
+//            case (MotionEvent.ACTION_CANCEL):
+//                Log.i(TAG, "Action was CANCEL");
+//                return true;
+//            case (MotionEvent.ACTION_OUTSIDE):
+//                Log.i(TAG, "Movement occurred outside bounds " +
+//                        "of current screen element");
+//                return true;
+//            default:
+//                return super.onTouchEvent(event);
+//        }
+//    }
 
-        switch (action) {
-            case (MotionEvent.ACTION_DOWN):
-                Log.i(TAG, "onTouchEvent : Action was DOWN");
-                return true;    // return false   if you want ignore this motionevent in future, so it's MOVE and UP will not be caught
-            case (MotionEvent.ACTION_MOVE):
-                Log.i(TAG, "Action was MOVE");
-                return true;
-            case (MotionEvent.ACTION_UP):
-                Log.i(TAG, "Action was UP");
-                return true;
-            case (MotionEvent.ACTION_CANCEL):
-                Log.i(TAG, "Action was CANCEL");
-                return true;
-            case (MotionEvent.ACTION_OUTSIDE):
-                Log.i(TAG, "Movement occurred outside bounds " +
-                        "of current screen element");
-                return true;
-            default:
-                return super.onTouchEvent(event);
-        }
-    }
 }

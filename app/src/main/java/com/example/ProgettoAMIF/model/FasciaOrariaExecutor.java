@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -15,7 +16,7 @@ import com.example.ProgettoAMIF.interfaces.INotificationService;
 import com.example.ProgettoAMIF.interfaces.IScreenDetector;
 import com.example.ProgettoAMIF.interfaces.ITouchDetector;
 import com.example.ProgettoAMIF.model.detectors.AccelerometerDetector;
-import com.example.ProgettoAMIF.model.detectors.ScreenOnOffBroadcastReceiver;
+import com.example.ProgettoAMIF.model.detectors.ScreenUnlockBroadcastReceiver;
 import com.example.ProgettoAMIF.model.detectors.TouchDetectService;
 import com.example.ProgettoAMIF.model.notificationService.ToastNotification;
 import com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.DialogNotification;
@@ -24,6 +25,7 @@ import com.example.eserciziobroadcastreceiver.R;
 
 public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecutor {
 
+    private static final String TAG = "FasciaOrariaExecutor";
     private IScreenDetector screenDetector;
     private ITouchDetector touchDetector;
     private IAccelerometerDetector accelerometerDetector;
@@ -36,30 +38,56 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
 
     @Override
     public void turnOnDetectors() {
+        Log.i(TAG, "turnOnDetectors.");
+
         // register screenDetector (Broadcast Receiver)
-        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_USER_UNLOCKED);
-        screenDetector = new ScreenOnOffBroadcastReceiver(this);
+
+        Log.i(TAG, "turnOnDetectors : screenDetector");
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_USER_PRESENT);
+        if(screenDetector == null)
+            screenDetector = new ScreenUnlockBroadcastReceiver(this);
+        try{
+            unregisterReceiver((BroadcastReceiver) screenDetector);
+        } catch (IllegalArgumentException e) {  }
         registerReceiver((BroadcastReceiver) screenDetector, intentFilter);
 
-        // activate TouchDetectService
-        Intent intent = new Intent(this, TouchDetectService.class);
-        startService(intent);
 
         //activate Accelerometer (Broadcast Receiver)
-        accelerometerDetector = new AccelerometerDetector(this);
+        Log.i(TAG, "turnOnDetectors : accelerometerDetector");
+        if(accelerometerDetector == null)
+            accelerometerDetector = new AccelerometerDetector(this);
+
+
+        // activate TouchDetectService
+        Log.i(TAG, "turnOnDetectors : touchDetector");
+        if(!TouchDetectService.running){
+            Intent intent = new Intent(this, TouchDetectService.class);
+            startService(intent);
+        }
+
     }
 
     @Override
     public void turnOffDetectors() {
-        // unregister screenDetector (Broadcast Receiver)
-        unregisterReceiver((BroadcastReceiver) screenDetector);
+        try{
+            // unregister screenDetector (Broadcast Receiver)
+            unregisterReceiver((BroadcastReceiver) screenDetector);
+
+            // unregister Accelerometer (Broadcast Receiver)
+            if(accelerometerDetector != null)
+                ((AccelerometerDetector) accelerometerDetector).end();
+
+        } catch(IllegalArgumentException e){
+            e.printStackTrace();
+        }
+
 
         // deactivate TouchDetectService
         Intent intent = new Intent(this, TouchDetectService.class);
         stopService(intent);
 
-        // unregister Accelerometer (Broadcast Receiver)
-        ((AccelerometerDetector) accelerometerDetector).end();
+        screen = touch = accelerometer = false;
     }
 
     @Nullable
@@ -76,21 +104,22 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
 
     @Override
     public void onCreate() {
-        turnOnDetectors();
         super.onCreate();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "Received start Intent.");
         String stop = intent.getStringExtra("stop");
         if(stop != null){
-            turnOffDetectors();
+            Log.i(TAG, "Received start Intent : contains STOP");
             stopSelf();
             return super.onStartCommand(intent, flags, startId);
         }
 
 
         if(intent.getStringExtra(this.getString(R.string.TouchDetected)) != null){
+            Log.i(TAG, "Received start Intent : contains TouchDetected");
             // fai qualcosa
 
             touch = true;
@@ -102,6 +131,7 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
 
 
         if(intent.getStringExtra(this.getString(R.string.ScreenUnlocked)) != null){
+            Log.i(TAG, "Received start Intent : contains ScreenUnlocked");
             // fai qualcosa
 
             screen = true;
@@ -113,6 +143,7 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
 
 
         if(intent.getStringExtra(this.getString(R.string.AccelerometerChanged)) != null){
+            Log.i(TAG, "Received start Intent : contains AccelerometerChanged");
             // fai qualcosa
 
             accelerometer = true;
@@ -135,6 +166,7 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
                 notificationService = new ToastNotification(this);
                 break;
         }
+        Log.i(TAG, "Received start Intent : contains TipoNotifica = " +notificationType);
 
         turnOnDetectors();
 
@@ -143,6 +175,10 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
 
 
     public void makeDecision(){
+
+        Log.i(TAG, "Inside makeDecision : screen="+screen+" touch="+touch+" acc="+accelerometer);
+
+
         // decidere / controllare se utente sta giocando cell da troppo tempo
 
         if(screen && touch && accelerometer){

@@ -21,13 +21,16 @@ import com.example.ProgettoAMIF.model.FasciaOrariaExecutor;
 
 public class TouchDetectService extends Service implements ITouchDetector {
 
+    public static boolean running = false;
     private final static String TAG = "TouchDetectService";
     WindowManager windowManager;
     LinearLayout detectorView;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "starting TouchDetectService...");
 
+        TouchDetectService.running = true;
         windowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         detectorView = new LinearLayout(getApplicationContext());
 
@@ -36,8 +39,9 @@ public class TouchDetectService extends Service implements ITouchDetector {
         detectorView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Log.i(TAG, "onTouch of TouchDetectorService");
-//                onTouchDetected();
+                Log.i(TAG, "onTouch of TouchDetectorService :" + event.toString());
+                if(event.getAction() == MotionEvent.ACTION_OUTSIDE)
+                    onTouchDetected();
                 return false;
             }
         });
@@ -54,6 +58,7 @@ public class TouchDetectService extends Service implements ITouchDetector {
         params.gravity = Gravity.LEFT | Gravity.TOP;
         windowManager.addView(detectorView, params);
 
+        Log.i(TAG, "TouchDetectService started.");
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -68,8 +73,10 @@ public class TouchDetectService extends Service implements ITouchDetector {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        Log.i(TAG, "onDestroy TouchDetectService...");
         windowManager.removeView(detectorView);
+        TouchDetectService.running = false;
+        super.onDestroy();
     }
 
     @Nullable

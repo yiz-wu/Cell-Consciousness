@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EsercizioBroadcastReceiver">
+        android:theme="@style/Theme.ProgettoAMIF">
         <activity android:name="com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.TransparentActivity" android:theme="@style/MyTranslucentTheme"></activity>
         <activity android:name="com.example.ProgettoAMIF.UI.MainActivity">
             <intent-filter>

@@ -9,12 +9,12 @@ import com.example.ProgettoAMIF.interfaces.IScreenDetector;
 import com.example.eserciziobroadcastreceiver.R;
 import com.example.ProgettoAMIF.model.FasciaOrariaExecutor;
 
-public class ScreenOnOffBroadcastReceiver extends BroadcastReceiver implements IScreenDetector {
+public class ScreenUnlockBroadcastReceiver extends BroadcastReceiver implements IScreenDetector {
 
     private static final String TAG = "ScreenBroadcastReceiver";
     private Context context;
 
-    public ScreenOnOffBroadcastReceiver(Context context) {
+    public ScreenUnlockBroadcastReceiver(Context context) {
         super();
         Log.i(TAG, "Costruttore ScreenOnOffBroadcastReceiver()");
         this.context = context;
@@ -22,6 +22,7 @@ public class ScreenOnOffBroadcastReceiver extends BroadcastReceiver implements I
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.i(TAG, "Received intent : "+intent.toString());
         onScreenDetected();
     }
 

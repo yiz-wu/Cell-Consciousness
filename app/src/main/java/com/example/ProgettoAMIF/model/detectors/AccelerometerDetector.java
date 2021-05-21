@@ -19,16 +19,14 @@ public class AccelerometerDetector implements SensorEventListener , IAcceleromet
     private SensorManager sensorManager = null;
     private SensorEventListener sensorEventListener = null;
     private Sensor accelerometer = null;
-//    private ArrayList<Float[]> accValues = null;
 
     private Context context;
 
     public AccelerometerDetector(Context context) {
+        Log.i(TAG, "Costruttore AccelerometerDetector()");
         this.context = context;
 
-//        accValues = new ArrayList<Float[]>();
         sensorEventListener = this;
-        // per avere accesso ai sensori
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         if(accelerometer == null){
@@ -46,19 +44,19 @@ public class AccelerometerDetector implements SensorEventListener , IAcceleromet
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        onAccelerometerDetected();
+        // implementa un filtro qua e poi togli il commento
+        // altrimenti questo va a folle e invoca questo metodo 10 volte al secondo
+//        onAccelerometerDetected();
     }
 
     @Override
     public void onAccelerometerDetected() {
         Intent intent = new Intent(context, FasciaOrariaExecutor.class);
-        intent.putExtra(context.getString(R.string.ScreenUnlocked), "a");
+        intent.putExtra(context.getString(R.string.AccelerometerChanged), "a");
         context.startService(intent);
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {  }
 
 }
