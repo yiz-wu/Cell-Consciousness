@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -23,6 +24,8 @@ import com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.Dial
 import com.example.ProgettoAMIF.model.notificationService.statusBarSystem.StatusBarNotification;
 import com.example.eserciziobroadcastreceiver.R;
 
+import java.sql.Timestamp;
+
 public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecutor {
 
     private static final String TAG = "FasciaOrariaExecutor";
@@ -34,6 +37,13 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
     boolean screen;
     boolean accelerometer;
     boolean touch;
+
+    int minutiPermessi;
+
+    private CountDownTimer countDownTimer1 = null;
+    private CountDownTimer countDownTimer2 = null;
+
+    private long lastTouch;
 
 
     @Override
@@ -118,29 +128,32 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
         }
 
 
-        if(intent.getStringExtra(this.getString(R.string.TouchDetected)) != null){
-            Log.i(TAG, "Received start Intent : contains TouchDetected");
-            // fai qualcosa
-
-            touch = true;
-
-            //
-            makeDecision();
-            return super.onStartCommand(intent, flags, startId);
-        }
-
-
         if(intent.getStringExtra(this.getString(R.string.ScreenUnlocked)) != null){
             Log.i(TAG, "Received start Intent : contains ScreenUnlocked");
             // fai qualcosa
 
-            screen = true;
 
-            //
-            makeDecision();
+            // ultimo touch e' avvenuto entro ultimi 30 secondi
+            // non dobbiamo aggiornare countDowntimer
+            if (System.currentTimeMillis() > lastTouch+30*1000){
+                // quando schermo sbloccato
+                countDownTimer1 = new CountDownTimer(minutiPermessi * 60 * 1000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        // TODO
+                        // se schermo ancora acceso  =>  manda la notifica.
+                        // notificationService.sendNotificationToUser("WEIYO");
+                    }
+                };
+            }
+
+
             return super.onStartCommand(intent, flags, startId);
         }
-
 
         if(intent.getStringExtra(this.getString(R.string.AccelerometerChanged)) != null){
             Log.i(TAG, "Received start Intent : contains AccelerometerChanged");
@@ -153,7 +166,18 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
             return super.onStartCommand(intent, flags, startId);
         }
 
+        if(intent.getStringExtra(this.getString(R.string.TouchDetected)) != null){
+            Log.i(TAG, "Received start Intent : contains TouchDetected");
 
+            // segniamo il tempo
+            lastTouch = System.currentTimeMillis();
+
+            return super.onStartCommand(intent, flags, startId);
+        }
+
+
+        lastTouch = System.currentTimeMillis();
+        minutiPermessi = intent.getIntExtra("MinutiPermessi", 2);
         int notificationType = intent.getIntExtra("TipoNotifica", 0);
         switch (notificationType){
             case FasciaOraria.NOTIFICATION:
@@ -175,7 +199,6 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
 
 
     public void makeDecision(){
-
         Log.i(TAG, "Inside makeDecision : screen="+screen+" touch="+touch+" acc="+accelerometer);
 
 

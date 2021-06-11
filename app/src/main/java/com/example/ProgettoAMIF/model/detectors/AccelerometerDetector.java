@@ -44,9 +44,18 @@ public class AccelerometerDetector implements SensorEventListener , IAcceleromet
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        // implementa un filtro qua e poi togli il commento
-        // altrimenti questo va a folle e invoca questo metodo 10 volte al secondo
-//        onAccelerometerDetected();
+        if(filtro(event))
+           onAccelerometerDetected();
+    }
+
+    private boolean filtro(SensorEvent event){
+        // analizza event
+
+        // se la variazione e' inferiore alla sensibilita' dell'accelerometro
+        return false;
+
+        // se effettivamente c'e' stato un spostamento
+//        return true;
     }
 
     @Override
