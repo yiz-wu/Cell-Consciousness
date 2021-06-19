@@ -1,7 +1,9 @@
 package com.example.ProgettoAMIF.model;
 
+import android.app.KeyguardManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.CountDownTimer;
@@ -131,26 +133,21 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
         if(intent.getStringExtra(this.getString(R.string.ScreenUnlocked)) != null){
             Log.i(TAG, "Received start Intent : contains ScreenUnlocked");
             // fai qualcosa
+            countDownTimer1 = new CountDownTimer(minutiPermessi * 60 * 1000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                }
 
-
-            // ultimo touch e' avvenuto entro ultimi 30 secondi
-            // non dobbiamo aggiornare countDowntimer
-            if (System.currentTimeMillis() > lastTouch+30*1000){
-                // quando schermo sbloccato
-                countDownTimer1 = new CountDownTimer(minutiPermessi * 60 * 1000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
+                @Override
+                public void onFinish() {
+                    // TODO
+                    if(!isPhoneLocked(getApplicationContext())){
+                        notificationService.sendNotificationToUser("Non è il momento di stare al cellulare");
                     }
-
-                    @Override
-                    public void onFinish() {
-                        // TODO
-                        // se schermo ancora acceso  =>  manda la notifica.
-                        // notificationService.sendNotificationToUser("WEIYO");
-                    }
-                };
-            }
-
+                    // se schermo ancora acceso  =>  manda la notifica.
+                    // notificationService.sendNotificationToUser("WEIYO");
+                }
+            };
 
             return super.onStartCommand(intent, flags, startId);
         }
@@ -210,6 +207,15 @@ public class FasciaOrariaExecutor extends Service implements IFasciaOrariaExecut
         }
 
     }
-
+    private boolean isPhoneLocked(Context context) {
+        boolean isPhoneLock = false;
+        if (context != null) {
+            KeyguardManager myKM = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+            if (myKM != null && myKM.isKeyguardLocked()) {
+                isPhoneLock = true;
+            }
+        }
+        return isPhoneLock;
+    }
 
 }

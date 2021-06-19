@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.data;
+    package com.example.ProgettoAMIF.data;
 
 import android.app.Activity;
 import android.app.AlarmManager;
