@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity{
 
 //        initScreenReceiver();
         initPermissionButton();
-//        initNotificationButton();
+        initNotificationButton();
 
 
 
@@ -128,11 +128,12 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Log.i(TAG, "inside NotificationButton ClickListener");
 
+                String CHANNEL_ID = "MyChannelID";
+                NotificationCompat.Builder notificationBuilder;
                 // for Android 8.0 and higher, u must register your app's notification channel before sending notification
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     CharSequence name = "MyChannel";
                     String description = "My channel's description";
-                    String CHANNEL_ID = "MyChannelID";
                     int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
                     NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
@@ -141,11 +142,12 @@ public class MainActivity extends AppCompatActivity{
                     // or other notification behaviors after this
                     NotificationManager notificationManager = getSystemService(NotificationManager.class);
                     notificationManager.createNotificationChannel(channel);
+                    Log.i(TAG, "inside channel");
                 }
 
 
                 String msg = "This is a notification msg";
-                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+                notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
 
                 notificationBuilder.setSmallIcon(R.drawable.ic_launcher_foreground)
                         .setContentTitle("Notification Title")
@@ -195,7 +197,9 @@ public class MainActivity extends AppCompatActivity{
                 int notificationID = 1;
 
 
+                Log.i(TAG, "before notifying");
                 NotificationManagerCompat.from(MainActivity.this).notify(notificationID, notificationBuilder.build());
+                Log.i(TAG, "after notifying");
             }
         });
 

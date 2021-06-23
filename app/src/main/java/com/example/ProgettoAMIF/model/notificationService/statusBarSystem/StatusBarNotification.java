@@ -28,11 +28,11 @@ public class StatusBarNotification implements INotificationService {
         this.context = context;
         this.NotificationTitle = notificationTitle;
 
+        String CHANNEL_ID = "MyChannelID";
         // for Android 8.0 and higher, u must register your app's notification channel before sending notification
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "MyChannel";
             String description = "My channel's description";
-            String CHANNEL_ID = "MyChannelID";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
@@ -43,8 +43,11 @@ public class StatusBarNotification implements INotificationService {
             notificationManager.createNotificationChannel(channel);
         }
 
-        notificationBuilder = new NotificationCompat.Builder(context);
+        // get notification builder
+        notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
 
+        // build notification
+        // setting SmallIcon and Title for notification
         notificationBuilder.setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(NotificationTitle)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -73,6 +76,7 @@ public class StatusBarNotification implements INotificationService {
 
     @Override
     public void sendNotificationToUser(String msg) {
+        // setting the text of notification
         notificationBuilder.setContentText(msg);
 
         // ID can be used in future if you want to update or remove it
