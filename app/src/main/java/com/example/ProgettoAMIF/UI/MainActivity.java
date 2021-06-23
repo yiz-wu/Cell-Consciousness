@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ProgettoAMIF.model.FasciaOrariaExecutor;
+import com.example.ProgettoAMIF.model.LightChecker;
 import com.example.ProgettoAMIF.model.detectors.ScreenUnlockBroadcastReceiver;
 import com.example.eserciziobroadcastreceiver.R;
 import com.example.ProgettoAMIF.model.notificationService.statusBarSystem.StatusBarNotification;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity{
     Context context;
 
     StatusBarNotification notificationService;
+    LightChecker lightChecker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,23 +88,29 @@ public class MainActivity extends AppCompatActivity{
         bSTART.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick of START button");
-                Intent intent = new Intent(context, FasciaOrariaExecutor.class);
-                intent.putExtra("Name", "TextName");
-                intent.putExtra("TipoNotifica", 0);
-                startService(intent);
-                Log.i(TAG, "onClick of START button : intent sent.");
+//                Log.i(TAG, "onClick of START button");
+//                Intent intent = new Intent(context, FasciaOrariaExecutor.class);
+//                intent.putExtra("Name", "TextName");
+//                intent.putExtra("TipoNotifica", 0);
+//                startService(intent);
+//                Log.i(TAG, "onClick of START button : intent sent.");
+
+                lightChecker = new LightChecker(getApplicationContext(), tvMsg);
+
             }
         });
 
         bSTOP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick of STOP button");
-                Intent intent = new Intent(context, FasciaOrariaExecutor.class);
-                intent.putExtra("stop", "stop");
-                startService(intent);
-                Log.i(TAG, "onClick of STOP button : intent sent.");
+//                Log.i(TAG, "onClick of STOP button");
+//                Intent intent = new Intent(context, FasciaOrariaExecutor.class);
+//                intent.putExtra("stop", "stop");
+//                startService(intent);
+//                Log.i(TAG, "onClick of STOP button : intent sent.");
+
+                lightChecker.Deactive();
+
             }
         });
 
