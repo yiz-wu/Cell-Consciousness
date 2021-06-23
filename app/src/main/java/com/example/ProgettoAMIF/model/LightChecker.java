@@ -8,12 +8,17 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ProgettoAMIF.interfaces.INotificationService;
 import com.example.ProgettoAMIF.model.notificationService.ToastAndStatusBarNotification;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class LightChecker {
 
@@ -25,6 +30,7 @@ public class LightChecker {
     private TextView tv;
 
     private float maximumRange;
+    private String isMIUI = "unKnown";
 
     public LightChecker(Context context, TextView t){
         this.tv = t;
@@ -55,8 +61,43 @@ public class LightChecker {
 
         };
 
+
+        if(isMiUi()) {
+            isMIUI = "true";
+        }
+        else {
+            isMIUI = "false";
+        }
+
         sensorManager.registerListener(lightEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
+
+    }
+
+    public boolean isMiUi() {
+        return !TextUtils.isEmpty(getSystemProperty("ro.miui.ui.version.name"));
+    }
+
+    public String getSystemProperty(String propName) {
+        String line;
+        BufferedReader input = null;
+        try {
+            java.lang.Process p = Runtime.getRuntime().exec("getprop " + propName);
+            input = new BufferedReader(new InputStreamReader(p.getInputStream()), 1024);
+            line = input.readLine();
+            input.close();
+        } catch (IOException ex) {
+            return null;
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return line;
     }
 
     public void Deactive(){
@@ -75,7 +116,7 @@ public class LightChecker {
             return;
         }
 
-        tv.setText("Brightness is : " + brightness + "\nlight sensor : " + value);
+        tv.setText(isMIUI + "\nBrightness is : " + brightness + "\nlight sensor : " + value);
 
 
         // compare them
