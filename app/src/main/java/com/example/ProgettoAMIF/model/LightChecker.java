@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ProgettoAMIF.interfaces.INotificationService;
@@ -23,19 +24,20 @@ public class LightChecker {
     private static final String TAG = "LigntChecker";
     private Context context;
     private SensorManager sensorManager;
+    private Sensor sensor;
     private SensorEventListener lightEventListener;
     private INotificationService notificationService;
 
     private String isMIUIasString = "unKnown";
     private long lastAlertTimeStamp = 0;
-    private int alertIntervall = 6000; // 6 seconds
+    private final int alertIntervall = 6000; // 6 seconds
 
     public LightChecker(Context context){
         this.context = context;
         Activate();
     }
 
-    public void Activate(){
+    private void Activate(){
         notificationService = new ToastAndStatusBarNotification(context, "Light");
 
         // MIUI system has a different range for screen brightness
@@ -43,9 +45,9 @@ public class LightChecker {
         isMIUIasString = isMiUi()? "true" : "false";
 
         sensorManager = (SensorManager) context.getSystemService(Service.SENSOR_SERVICE);
-        Sensor lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        if(lightSensor == null){
-            Toast.makeText(context.getApplicationContext(), "Light Sensor not valid.", Toast.LENGTH_LONG);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        if(sensor == null){
+            Toast.makeText(context.getApplicationContext(), "Light Sensor not valid.", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Lignt Sensor not valid.");
             return;
         }
@@ -59,7 +61,7 @@ public class LightChecker {
             public void onAccuracyChanged(Sensor sensor, int accuracy) {      }
         };
 
-        sensorManager.registerListener(lightEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(lightEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
     }
 
@@ -69,6 +71,7 @@ public class LightChecker {
     }
 
     private void CompareLightWithBrightness(float ambienteLumens) {
+        // get current screen brightness
         int brightness = 0;
         try {
             brightness = Settings.System.getInt(context.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
@@ -98,7 +101,7 @@ public class LightChecker {
     }
 
     private void Alert(String Alertmsg){
-        // a time check in order to not spam toast
+        // a time check in order to avoid spamming notification
         if(System.currentTimeMillis()-alertIntervall > lastAlertTimeStamp){
             lastAlertTimeStamp = System.currentTimeMillis();
             notificationService.sendNotificationToUser(Alertmsg);

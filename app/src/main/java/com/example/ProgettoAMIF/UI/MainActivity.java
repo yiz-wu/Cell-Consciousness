@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.ProgettoAMIF.model.FasciaOrariaExecutor;
 import com.example.ProgettoAMIF.model.LightChecker;
+import com.example.ProgettoAMIF.model.MovementChecker;
 import com.example.ProgettoAMIF.model.detectors.ScreenUnlockBroadcastReceiver;
 import com.example.eserciziobroadcastreceiver.R;
 import com.example.ProgettoAMIF.model.notificationService.statusBarSystem.StatusBarNotification;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity{
 
     StatusBarNotification notificationService;
     LightChecker lightChecker;
+    MovementChecker movementChecker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +97,8 @@ public class MainActivity extends AppCompatActivity{
 //                startService(intent);
 //                Log.i(TAG, "onClick of START button : intent sent.");
 
-                lightChecker = new LightChecker(getApplicationContext(), tvMsg);
+//                lightChecker = new LightChecker(getApplicationContext());
+                movementChecker = new MovementChecker(getApplicationContext());
 
             }
         });
@@ -109,7 +112,8 @@ public class MainActivity extends AppCompatActivity{
 //                startService(intent);
 //                Log.i(TAG, "onClick of STOP button : intent sent.");
 
-                lightChecker.Deactive();
+//                lightChecker.Deactive();
+                movementChecker.Deactive();
 
             }
         });
