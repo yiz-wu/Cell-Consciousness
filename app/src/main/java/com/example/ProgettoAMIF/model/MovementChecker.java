@@ -1,22 +1,31 @@
 package com.example.ProgettoAMIF.model;
 
 import android.app.KeyguardManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.IBinder;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
+import com.example.ProgettoAMIF.UI.MainActivity;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
 import com.example.ProgettoAMIF.model.notificationService.ToastAndStatusBarNotification;
+import com.example.ProgettoAMIF.model.notificationService.ToastNotification;
+import com.example.eserciziobroadcastreceiver.R;
 
 import java.util.ArrayDeque;
 
-public class MovementChecker {
+public class MovementChecker extends Service{
 
     private static final String TAG = "MovementChecker";
     private Context context;
@@ -26,20 +35,50 @@ public class MovementChecker {
     private KeyguardManager keyguardManager;
     private INotificationService notificationService;
 
+    private final int sensorSamplingPeriodInMillis = 500;   // measure every 0.5 seconds
+    private final int milliSecondsInConsideration = 5000;   // consider last 5 seconds measurement
     private long lastAlertTimeStamp = 0;
-    private final int alertIntervall = 6000; // 6 seconds
-    private double sumOf15Acceleration = 0;
-    private ArrayDeque<Double> last15acceleration = null;
-    // linear acceleration sensor responds +- 5 times per second, so I'am going to consider only last 3 seconds
+    private final int alertIntervall = 5000; // 5 seconds
+    private double sumOfLastAccelerations = 0;
+    private ArrayDeque<Double> lastAccelerations = null;
 
-    public MovementChecker(Context context){
-        this.context = context;
-        Activate();
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "MovementChecker onStartCommand.");
+        context = this;
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        Notification notification =
+                new NotificationCompat.Builder(this, getText(R.string.channelID).toString())
+                        .setContentTitle("Movement Checker")
+                        .setContentText("Movement Checker in work.")
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setContentIntent(pendingIntent)
+                        .build();
+        // Notification ID cannot be 0.
+        // associate this service with a notification so it will become a Foreground Service
+        startForeground(11, notification);
+
+        if(Initialization())
+            Activate();
+        else
+            stopSelf();
+        return super.onStartCommand(intent, flags, startId);
     }
 
-    private void Activate(){
-        notificationService = new ToastAndStatusBarNotification(context, "Movement");
-        last15acceleration = new ArrayDeque<>(15);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Deactive();
+    }
+
+    private boolean Initialization() {
+        Log.i(TAG, "MovementChecker Initialization.");
+        notificationService = new ToastNotification(context);
+        lastAccelerations = new ArrayDeque<>(milliSecondsInConsideration / sensorSamplingPeriodInMillis);
         keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
 
         // TYPE_LINEAR_ACCELERATION represent phone's acceleration excluding gravity.
@@ -48,8 +87,13 @@ public class MovementChecker {
         if(sensor == null){
             Toast.makeText(context.getApplicationContext(), "Linear_Acceleration Sensor not valid.", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Linear_Acceleration Sensor not valid.");
-            return;
+            return false;
         }
+        return true;
+    }
+
+    private void Activate(){
+        Log.i(TAG, "MovementChecker Activate.");
         sensorEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -68,23 +112,33 @@ public class MovementChecker {
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {      }
         };
-        sensorManager.registerListener(sensorEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(sensorEventListener, sensor, sensorSamplingPeriodInMillis * 1000);
+        // *1000 beacause samplingPeriodUs uses Microseconds as unit
+
+        Toast.makeText(context.getApplicationContext(), "Movement Cheker Activated.", Toast.LENGTH_SHORT).show();
     }
 
-    private void ElaborateTotalAcceleration(double accelerationModule) {
-        // I'm considering only last 3 seconds's movement, that's +- 15 sensor measurement
-        if(last15acceleration.size() == 15){
-            sumOf15Acceleration -= last15acceleration.remove();
-        }
-        sumOf15Acceleration += accelerationModule;
-        last15acceleration.addLast(accelerationModule);
+    public void Deactive(){
+        Log.i(TAG, "MovementChecker Deactive.");
+        sensorManager.unregisterListener(sensorEventListener);
+    }
 
-        // with test, I found out that event when walking slowly, the medium is above 0.75
-        if(sumOf15Acceleration / last15acceleration.size() > 0.75)
+
+    private void ElaborateTotalAcceleration(double accelerationModule) {
+        // I'm considering only last 5 seconds's movement, that will be 10 sensor measurement
+        if(lastAccelerations.size() == milliSecondsInConsideration / sensorSamplingPeriodInMillis){
+            sumOfLastAccelerations -= lastAccelerations.remove();
+        }
+        sumOfLastAccelerations += accelerationModule;
+        lastAccelerations.addLast(accelerationModule);
+        Log.i(TAG, "sumOfLastAccelerations : " + sumOfLastAccelerations);
+
+        // with test, I found out that event when walking slowly, the medium is above 1
+        if( lastAccelerations.size() == milliSecondsInConsideration / sensorSamplingPeriodInMillis
+            && sumOfLastAccelerations / lastAccelerations.size() > 1)
             Alert("Alza la testa, Giu il telefono!");
     }
 
-    public void Deactive(){   sensorManager.unregisterListener(sensorEventListener);    }
 
     private void Alert(String Alertmsg){
         // a time check in order to avoid spamming notification
@@ -96,5 +150,11 @@ public class MovementChecker {
 
     private boolean isPhoneLocked() {
         return keyguardManager.isKeyguardLocked();
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 }

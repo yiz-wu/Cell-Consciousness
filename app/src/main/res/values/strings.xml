@@ -11,4 +11,6 @@
     <string name="ScreenUnlocked">ScreenUnlocked</string>
     <string name="AccelerometerChanged">AccelerometerChanged</string>
 
+    <string name="channelID">My Unique Channel ID</string>
+
 </resources>

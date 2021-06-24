@@ -1,25 +1,37 @@
 package com.example.ProgettoAMIF.model;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
+import android.os.IBinder;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
+import com.example.ProgettoAMIF.UI.MainActivity;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
 import com.example.ProgettoAMIF.model.notificationService.ToastAndStatusBarNotification;
+import com.example.ProgettoAMIF.model.notificationService.ToastNotification;
+import com.example.eserciziobroadcastreceiver.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class LightChecker {
+public class LightChecker extends Service{
 
     private static final String TAG = "LigntChecker";
     private Context context;
@@ -32,16 +44,45 @@ public class LightChecker {
     private long lastAlertTimeStamp = 0;
     private final int alertIntervall = 6000; // 6 seconds
 
-    public LightChecker(Context context){
-        this.context = context;
-        Activate();
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "LightChecker onStartCommand.");
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        Notification notification =
+                new NotificationCompat.Builder(this, getText(R.string.channelID).toString())
+                        .setContentTitle("Light Checker")
+                        .setContentText("Light Checker in work.")
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setContentIntent(pendingIntent)
+                        .build();
+        // Notification ID cannot be 0.
+        // associate this service with a notification so it will become a Foreground Service
+        startForeground(10, notification);
+
+        if(Initialization())
+            Activate();
+        else
+            stopSelf();
+        return super.onStartCommand(intent, flags, startId);
     }
 
-    private void Activate(){
-        notificationService = new ToastAndStatusBarNotification(context, "Light");
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Deactive();
+    }
 
-        // MIUI system has a different range for screen brightness
-        // I used a string instead of a boolean, because maybe there is other OS that use a different range
+    private boolean Initialization() {
+        Log.i(TAG, "LightChecker Initialization.");
+        context = getApplicationContext();
+        notificationService = new ToastNotification(context);
+
+        // MIUI system has a different range for screen brightness than Android Standard
+        // I used a string instead of a boolean, because maybe there will be other OS that use different range
         isMIUIasString = isMiUi()? "true" : "false";
 
         sensorManager = (SensorManager) context.getSystemService(Service.SENSOR_SERVICE);
@@ -49,8 +90,13 @@ public class LightChecker {
         if(sensor == null){
             Toast.makeText(context.getApplicationContext(), "Light Sensor not valid.", Toast.LENGTH_LONG).show();
             Log.e(TAG, "Lignt Sensor not valid.");
-            return;
+            return false;
         }
+        return true;
+    }
+
+    private void Activate(){
+        Log.i(TAG, "LightChecker Activate.");
         lightEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -60,19 +106,20 @@ public class LightChecker {
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {      }
         };
-
         sensorManager.registerListener(lightEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 
+        Toast.makeText(context.getApplicationContext(), "Light Cheker Activated.", Toast.LENGTH_SHORT).show();
     }
 
-
     public void Deactive(){
+        Log.i(TAG, "LightChecker Deactive.");
         sensorManager.unregisterListener(lightEventListener);
     }
 
+
     private void CompareLightWithBrightness(float ambienteLumens) {
         // get current screen brightness
-        int brightness = 0;
+        int brightness;
         try {
             brightness = Settings.System.getInt(context.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
         } catch (Settings.SettingNotFoundException e) {
@@ -134,4 +181,9 @@ public class LightChecker {
         return line;
     }
 
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 }

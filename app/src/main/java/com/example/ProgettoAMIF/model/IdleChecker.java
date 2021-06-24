@@ -1,21 +1,30 @@
 package com.example.ProgettoAMIF.model;
 
 import android.app.KeyguardManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
+import com.example.ProgettoAMIF.UI.MainActivity;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
 import com.example.ProgettoAMIF.model.notificationService.ToastAndStatusBarNotification;
+import com.example.eserciziobroadcastreceiver.R;
 
 import java.util.ArrayDeque;
 
-public class IdleAlerter {
+public class IdleChecker extends Service{
 
     private static final String TAG = "IdleAlerter";
     private Context context;
@@ -25,26 +34,56 @@ public class IdleAlerter {
     private KeyguardManager keyguardManager;
     private INotificationService notificationService;
 
-    private final int sensorSamplingPeriodInMillis = 3000;
-    private final int checkMovementEveryNMilliSeconds = 15000;
+    private final int sensorSamplingPeriodInMillis = 3000;  // measure every 3 seconds
+    private final int milliSecondsInConsideration = 15000;  // considerate last 15 seconds -> 5 measurement
     private double sumOfLastAccelerations = 0;
     private ArrayDeque<Double> lastAccelerations = null;
 
     private long lastMovement = 0;
-    private final int alertInterval = 1000 * 60 * 10; // 10 minutes -> 600 seconds
+//    private final int alertInterval = 1000 * 60 * 10; // 10 minutes -> 600 seconds
+
+    private final int alertInterval = 30000;  // fot test purpose
 
     private boolean userWasUsingPhone = false;
 
-    public IdleAlerter(Context context){
-        this.context = context;
-        if(Initiate())
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.i(TAG, "IdleChecker onStartCommand.");
+        context = this;
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent =
+                PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        Notification notification =
+                new NotificationCompat.Builder(this, getText(R.string.channelID).toString())
+                        .setContentTitle("Idle Checker")
+                        .setContentText("Idle Checker in work.")
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setContentIntent(pendingIntent)
+                        .build();
+        // Notification ID cannot be 0.
+        // associate this service with a notification so it will become a Foreground Service
+        startForeground(12, notification);
+
+        if(Initialization())
             Activate();
+        else
+            stopSelf();
+        return super.onStartCommand(intent, flags, startId);
     }
 
-    private boolean Initiate() {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Deactive();
+    }
+
+    private boolean Initialization() {
+        Log.i(TAG, "IdleChecker Initialization.");
         notificationService = new ToastAndStatusBarNotification(context, "Idle Alert");
         keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
-        lastAccelerations = new ArrayDeque<>(checkMovementEveryNMilliSeconds / sensorSamplingPeriodInMillis);
+        lastAccelerations = new ArrayDeque<>(milliSecondsInConsideration / sensorSamplingPeriodInMillis);
         lastMovement = System.currentTimeMillis();
 
         // TYPE_LINEAR_ACCELERATION represent phone's acceleration excluding gravity.
@@ -59,6 +98,7 @@ public class IdleAlerter {
     }
 
     private void Activate(){
+        Log.i(TAG, "IdleChecker Activate.");
         sensorEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -82,12 +122,19 @@ public class IdleAlerter {
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {      }
         };
-        sensorManager.registerListener(sensorEventListener, sensor, sensorSamplingPeriodInMillis);
+        sensorManager.registerListener(sensorEventListener, sensor, sensorSamplingPeriodInMillis * 1000);
+        // *1000 beacause samplingPeriodUs uses Microseconds as unit
+
+        Toast.makeText(context.getApplicationContext(), "Idle Cheker Activated.", Toast.LENGTH_SHORT).show();
     }
 
+    public void Deactive(){
+        Log.i(TAG, "IdleChecker Deactive.");
+        sensorManager.unregisterListener(sensorEventListener);
+    }
     private void ElaborateAccelerationModule(double accelerationModule) {
         // if queue is full, pop the oldest one before adding the newest
-        if(lastAccelerations.size() == checkMovementEveryNMilliSeconds / sensorSamplingPeriodInMillis){
+        if(lastAccelerations.size() == milliSecondsInConsideration / sensorSamplingPeriodInMillis){
             sumOfLastAccelerations -= lastAccelerations.remove();
         }
         sumOfLastAccelerations += accelerationModule;
@@ -95,7 +142,7 @@ public class IdleAlerter {
 
         // IF it's passed more than alertInterval time since lastMovement time, alert and reset lastMovement time.
         if(System.currentTimeMillis() > lastMovement + alertInterval){
-            Alert("Alza la testa, Giu il telefono!");
+            Alert("Sei stato fermo con il telefono per troppo tempo!");
             lastMovement = System.currentTimeMillis();
         }
 
@@ -104,7 +151,6 @@ public class IdleAlerter {
             lastMovement = System.currentTimeMillis();
     }
 
-    public void Deactive(){   sensorManager.unregisterListener(sensorEventListener);    }
 
     private void Alert(String Alertmsg){
             notificationService.sendNotificationToUser(Alertmsg);
@@ -112,5 +158,11 @@ public class IdleAlerter {
 
     private boolean isPhoneLocked() {
         return keyguardManager.isKeyguardLocked();
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 }

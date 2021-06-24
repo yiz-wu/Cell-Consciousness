@@ -8,6 +8,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,6 +17,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -28,7 +31,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ProgettoAMIF.model.FasciaOrariaExecutor;
+import com.example.ProgettoAMIF.model.IdleChecker;
 import com.example.ProgettoAMIF.model.LightChecker;
 import com.example.ProgettoAMIF.model.MovementChecker;
 import com.example.ProgettoAMIF.model.detectors.ScreenUnlockBroadcastReceiver;
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity{
         initPermissionButton();
         initNotificationButton();
 
+        createChannelID();
 
 
         tvMsg.setOnTouchListener(new View.OnTouchListener() {
@@ -90,15 +94,22 @@ public class MainActivity extends AppCompatActivity{
         bSTART.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Log.i(TAG, "onClick of START button");
+                Log.i(TAG, "onClick of START button");
 //                Intent intent = new Intent(context, FasciaOrariaExecutor.class);
 //                intent.putExtra("Name", "TextName");
 //                intent.putExtra("TipoNotifica", 0);
 //                startService(intent);
 //                Log.i(TAG, "onClick of START button : intent sent.");
 
-//                lightChecker = new LightChecker(getApplicationContext());
-                movementChecker = new MovementChecker(getApplicationContext());
+
+//                Intent intent = new Intent(context, LightChecker.class);
+//                startService(intent);
+//
+//                Intent intent2 = new Intent(context, MovementChecker.class);
+//                startService(intent2);
+
+                Intent intent3 = new Intent(context, IdleChecker.class);
+                startService(intent3);
 
             }
         });
@@ -106,14 +117,20 @@ public class MainActivity extends AppCompatActivity{
         bSTOP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Log.i(TAG, "onClick of STOP button");
+                Log.i(TAG, "onClick of STOP button");
 //                Intent intent = new Intent(context, FasciaOrariaExecutor.class);
 //                intent.putExtra("stop", "stop");
 //                startService(intent);
 //                Log.i(TAG, "onClick of STOP button : intent sent.");
 
-//                lightChecker.Deactive();
-                movementChecker.Deactive();
+//                Intent intent = new Intent(context, LightChecker.class);
+//                stopService(intent);
+//
+//                Intent intent2 = new Intent(context, MovementChecker.class);
+//                stopService(intent2);
+
+                Intent intent3 = new Intent(context, IdleChecker.class);
+                stopService(intent3);
 
             }
         });
@@ -124,6 +141,22 @@ public class MainActivity extends AppCompatActivity{
 //        notificationService = new StatusBarNotification(this, "ciao");
 //        notificationService.sendNotificationToUser("AOHD");
 
+    }
+
+    private void createChannelID() {
+        // for Android 8.0 and higher, u must register your app's notification channel before sending notification
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "MyChannel";
+            String description = "My channel's description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel(getText(R.string.channelID).toString(), name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     private void initNotificationButton() {
@@ -219,11 +252,12 @@ public class MainActivity extends AppCompatActivity{
                     Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
                     startActivityForResult(intent, 0);
                 } else {
-                    Toast.makeText(MainActivity.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Draw Overlays permission already granted", Toast.LENGTH_SHORT).show();
                 }
 
                 // ask for camera permission
 //                askPermission(Manifest.permission.CAMERA, 1);
+                askPermission(Manifest.permission.FOREGROUND_SERVICE, 2);
             }
         });
     }
