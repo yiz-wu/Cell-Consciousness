@@ -68,6 +68,8 @@ public class FasciaOrariaHandler implements IFasciaOrariaHandler, Iterable<Fasci
         editor.apply();
     }
 
+    public ArrayList<FasciaOraria> getList() { return list; }
+
     @Override
     public int getSize() {
         if(list!=null)

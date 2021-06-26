@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:background="@drawable/border_light"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:drawableEnd="@drawable/ic_edit_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/lyTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_light"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etName"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/timePickerDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Monitor time"
+            android:textAlignment="center"
+            />
+
+        <RelativeLayout
+            android:id="@+id/lyTimePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/timePickerDescription">
+
+            <TimePicker
+                android:id="@+id/startTime"
+                android:layout_width="wrap_content"
+                android:scaleX="0.8"
+                android:layout_height="100dp"
+                android:layout_alignParentStart="true"
+                android:timePickerMode="spinner" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - "
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:layout_centerInParent="true"
+                />
+
+            <TimePicker
+                android:id="@+id/endTime"
+                android:layout_width="wrap_content"
+                android:scaleX="0.8"
+                android:layout_height="100dp"
+                android:layout_alignParentEnd="true"
+                android:timePickerMode="spinner" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lyMinutiPermessi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_light"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lyTime"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/minutiPermessiDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Allowed distraction time"
+            android:textAlignment="center"
+            />
+
+        <NumberPicker
+            android:id="@+id/minutiPermessi"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lyNotifica"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_light"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lyMinutiPermessi"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/notificaDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="alert me with"
+            android:textAlignment="center" />
+
+        <RadioGroup
+            android:id="@+id/notificationGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/alert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alert Dialog" />
+
+            <RadioButton
+                android:id="@+id/notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notification" />
+
+            <RadioButton
+                android:id="@+id/toast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Only Toast" />
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

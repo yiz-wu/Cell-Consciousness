@@ -13,4 +13,17 @@
 
     <string name="channelID">My Unique Channel ID</string>
 
+    <string name="navbar_timer">Timer</string>
+    <string name="navbar_reminder">Reminder</string>
+    <string name="navbar_profile">Profile</string>
+    <string name="timer_header_text">Hello!</string>
+    <string name="brightness">Brightness</string>
+    <string name="spiegazione_brightness">TODO spiegazione_brightness</string>
+    <string name="movement">Movement</string>
+    <string name="spiegazione_movement">TODO spiegazione_movement</string>
+    <string name="idle_alert">Idle Alert</string>
+    <string name="spiegazione_idle_alert">TODO spiegazione_idle_alert</string>
+    <string name="confirm">Confirm</string>
+    <string name="change">Change</string>
+
 </resources>

@@ -1,8 +1,6 @@
 package com.example.ProgettoAMIF.model;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -11,7 +9,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -21,9 +18,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.example.ProgettoAMIF.UI.MainActivity;
+import com.example.ProgettoAMIF.UI.MainActivity2;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
-import com.example.ProgettoAMIF.model.notificationService.ToastAndStatusBarNotification;
 import com.example.ProgettoAMIF.model.notificationService.ToastNotification;
 import com.example.eserciziobroadcastreceiver.R;
 
@@ -48,7 +44,7 @@ public class LightChecker extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "LightChecker onStartCommand.");
-        Intent notificationIntent = new Intent(this, MainActivity.class);
+        Intent notificationIntent = new Intent(this, MainActivity2.class);
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
