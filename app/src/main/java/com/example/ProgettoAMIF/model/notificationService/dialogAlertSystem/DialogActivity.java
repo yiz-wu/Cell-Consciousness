@@ -9,9 +9,9 @@ import android.util.Log;
 import com.example.eserciziobroadcastreceiver.R;
 import com.example.ProgettoAMIF.interfaces.IAlertDialogListener;
 
-public class TransparentActivity extends AppCompatActivity implements IAlertDialogListener {
+public class DialogActivity extends AppCompatActivity implements IAlertDialogListener {
 
-    private static final String TAG = "TransparentActivity";
+    private static final String TAG = "DialogActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

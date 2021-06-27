@@ -8,7 +8,7 @@
     <string name="dialog_fire_title">ALERT :</string>
     <string name="wait">WAIT?</string>
     <string name="TouchDetected">TouchDetected</string>
-    <string name="ScreenUnlocked">ScreenUnlocked</string>
+    <string name="ScreenState">ScreenUnlocked</string>
     <string name="AccelerometerChanged">AccelerometerChanged</string>
 
     <string name="channelID">My Unique Channel ID</string>
@@ -18,16 +18,16 @@
     <string name="navbar_profile">Profile</string>
     <string name="timer_header_text">Hello!</string>
     <string name="brightness">Brightness</string>
-    <string name="spiegazione_brightness">TODO spiegazione_brightness</string>
+    <string name="spiegazione_brightness">Change your screen brightness according to environment luminosity. We can reminder you if you forget it ;)</string>
     <string name="movement">Movement</string>
-    <string name="spiegazione_movement">TODO spiegazione_movement</string>
+    <string name="spiegazione_movement">Please Do not Use cellphone in movement, it\'s risking your life. We can reminder you if you forget it ;)</string>
     <string name="idle_alert">Idle Alert</string>
-    <string name="spiegazione_idle_alert">TODO spiegazione_idle_alert</string>
+    <string name="spiegazione_idle_alert">Dont spend too much time idle, every now and then Heads Up and take a break. We can reminder you if you forget it ;)</string>
     <string name="confirm">Confirm</string>
     <string name="change">Change</string>
     <string name="permission">Permission</string>
     <string name="grant_permission_button">grant permission</string>
-    <string name="ask_permission_message">This application needs "Draw over other apps" permission in order to work. Please click the button, select this app from list and grant the permission :)</string>
+    <string name="ask_permission_message">This application needs "DISPLAY OVER APPS" permission in order to work fine. Please click the button, select this app from list and grant the permission :)</string>
     <string name="reminder_autostop_description">To save battery, reminders automatically stop at</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.UI.timer;
+package com.example.ProgettoAMIF.model;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -50,16 +50,16 @@ public class FasciaOrariaListAdapter extends ArrayAdapter<FasciaOraria> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        int ID = getItem(position).getID();
-        String name = getItem(position).getName();
-        int startHour = getItem(position).getStartHour();
-        int startMinute = getItem(position).getStartMinute();
-        int endHour = getItem(position).getEndHour();
-        int endMinute = getItem(position).getEndMinute();
-        int minutiPermessi = getItem(position).getMinutiPermessi();
-        boolean active = getItem(position).isActive();
-        int notificationType = getItem(position).getNotificationType();
-        FasciaOraria fasciaOraria = fasciaOrariaHandler.getFasciaOrariaByID(ID);
+        FasciaOraria currentFasciaOraria = getItem(position);
+        int ID = currentFasciaOraria.getID();
+        String name = currentFasciaOraria.getName();
+        int startHour = currentFasciaOraria.getStartHour();
+        int startMinute = currentFasciaOraria.getStartMinute();
+        int endHour = currentFasciaOraria.getEndHour();
+        int endMinute = currentFasciaOraria.getEndMinute();
+        int secondiPermessi = currentFasciaOraria.getSecondiPermessi();
+        boolean active = currentFasciaOraria.isActive();
+        int notificationType = currentFasciaOraria.getNotificationType();
 
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource, parent, false);
@@ -112,10 +112,10 @@ public class FasciaOrariaListAdapter extends ArrayAdapter<FasciaOraria> {
                     endTimePicker.setCurrentMinute(endMinute);
                 }
 
-                NumberPicker minutiPermessiPicker = editView.findViewById(R.id.minutiPermessi);
-                minutiPermessiPicker.setMinValue(0);
-                minutiPermessiPicker.setMaxValue(30);
-                minutiPermessiPicker.setValue(minutiPermessi);
+                NumberPicker allowedSecondsPicker = editView.findViewById(R.id.secondiPermessi);
+                allowedSecondsPicker.setMinValue(0);
+                allowedSecondsPicker.setMaxValue(1500);
+                allowedSecondsPicker.setValue(secondiPermessi);
 
                 RadioGroup notificationTypeGroup = editView.findViewById(R.id.notificationGroup);
                 switch (notificationType){
@@ -135,12 +135,12 @@ public class FasciaOrariaListAdapter extends ArrayAdapter<FasciaOraria> {
                 alert.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Toast.makeText(context, "Saved!", Toast.LENGTH_SHORT).show();
-                        fasciaOraria.setName(etName.getText().toString());
-                        fasciaOraria.setStartHour(startTimePicker.getCurrentHour());
-                        fasciaOraria.setStartMinute(startTimePicker.getCurrentMinute());
-                        fasciaOraria.setEndHour(endTimePicker.getCurrentHour());
-                        fasciaOraria.setEndMinute(endTimePicker.getCurrentMinute());
-                        fasciaOraria.setMinutiPermessi(minutiPermessiPicker.getValue());
+                        currentFasciaOraria.setName(etName.getText().toString());
+                        currentFasciaOraria.setStartHour(startTimePicker.getCurrentHour());
+                        currentFasciaOraria.setStartMinute(startTimePicker.getCurrentMinute());
+                        currentFasciaOraria.setEndHour(endTimePicker.getCurrentHour());
+                        currentFasciaOraria.setEndMinute(endTimePicker.getCurrentMinute());
+                        currentFasciaOraria.setSecondiPermessi(allowedSecondsPicker.getValue());
                         int notificationType;
                         switch (notificationTypeGroup.getCheckedRadioButtonId()){
                             case R.id.alert:
@@ -154,7 +154,8 @@ public class FasciaOrariaListAdapter extends ArrayAdapter<FasciaOraria> {
                                 break;
                         }
                         Log.i(TAG, "onClick of " + name + " notifcationType is " + notificationType);
-                        fasciaOraria.setNotificationType(notificationType);
+                        currentFasciaOraria.setNotificationType(notificationType);
+                        switchFasciaOraria.setChecked(false);
                         notifyDataSetChanged();
                     }
                 });
@@ -181,7 +182,7 @@ public class FasciaOrariaListAdapter extends ArrayAdapter<FasciaOraria> {
                     fasciaOrariaHandler.disableFasciaOraria(ID);
                     Toast.makeText(context, "Deactivated!", Toast.LENGTH_SHORT).show();
                 }
-                fasciaOraria.setActive(isChecked);
+                currentFasciaOraria.setActive(isChecked);
                 previousState = isChecked;
             }
         });
@@ -199,7 +200,7 @@ public class FasciaOrariaListAdapter extends ArrayAdapter<FasciaOraria> {
                 tipoNotifica = "Toast";
                 break;
         }
-        String details = String.format("%02d:%02d - %02d:%02d  |  %d mins  |  %s",startHour, startMinute, endHour, endMinute, minutiPermessi, tipoNotifica);
+        String details = String.format("%02d:%02d - %02d:%02d  |  %d seconds  |  %s",startHour, startMinute, endHour, endMinute, secondiPermessi, tipoNotifica);
         tvFasciaOrariaDetail.setText(details);
         switchFasciaOraria.setChecked(active);
 

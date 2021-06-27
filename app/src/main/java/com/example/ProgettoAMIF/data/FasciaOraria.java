@@ -15,7 +15,7 @@ public class FasciaOraria {
     private int startMinute;
     private int endHour;
     private int endMinute;
-    private int minutiPermessi;
+    private int secondiPermessi;
     private int notificationType;
 
     public int getID() {
@@ -57,11 +57,11 @@ public class FasciaOraria {
     public void setEndMinute(int endMinute) {
         this.endMinute = endMinute;
     }
-    public int getMinutiPermessi() {
-        return minutiPermessi;
+    public int getSecondiPermessi() {
+        return secondiPermessi;
     }
-    public void setMinutiPermessi(int minutiPermessi) {
-        this.minutiPermessi = minutiPermessi;
+    public void setSecondiPermessi(int secondiPermessi) {
+        this.secondiPermessi = secondiPermessi;
     }
     public int getNotificationType() {
         return notificationType;
@@ -70,8 +70,8 @@ public class FasciaOraria {
         this.notificationType = notificationType;
     }
 
-    public static FasciaOraria newInstance(int ID, String name, boolean active, int startHour, int startMinute, int endHour, int endMinute, int minutiPermessi, int notificationType) {
-        return new FasciaOraria(ID, name, active, startHour, startMinute, endHour, endMinute, minutiPermessi, notificationType);
+    public static FasciaOraria newInstance(int ID, String name, boolean active, int startHour, int startMinute, int endHour, int endMinute, int secondiPermessi, int notificationType) {
+        return new FasciaOraria(ID, name, active, startHour, startMinute, endHour, endMinute, secondiPermessi, notificationType);
     }
 
     public FasciaOraria(){
@@ -82,11 +82,11 @@ public class FasciaOraria {
         this.startMinute = 0;
         this.endHour = 0;
         this.endMinute = 0;
-        this.minutiPermessi = 10;
+        this.secondiPermessi = 10;
         this.notificationType = FasciaOraria.TOAST;
     }
 
-    public FasciaOraria(int ID, String name, boolean active, int startHour, int startMinute, int endHour, int endMinute, int minutiPermessi, int notificationType) {
+    public FasciaOraria(int ID, String name, boolean active, int startHour, int startMinute, int endHour, int endMinute, int secondiPermessi, int notificationType) {
         if(ID > FasciaOraria.IDpool){
             FasciaOraria.IDpool = ID+1;
             this.ID = ID;
@@ -97,7 +97,7 @@ public class FasciaOraria {
         this.startMinute = startMinute;
         this.endHour = endHour;
         this.endMinute = endMinute;
-        this.minutiPermessi = minutiPermessi;
+        this.secondiPermessi = secondiPermessi;
         this.notificationType = notificationType;
     }
 
@@ -111,7 +111,7 @@ public class FasciaOraria {
                             ", startMinute=" + startMinute +
                             ", endHour=" + endHour +
                             ", endMinute=" + endMinute +
-                            ", minutiPermessi=" + minutiPermessi +
+                            ", secondiPermessi=" + secondiPermessi +
                             ", notificationType=" + notificationType + "]";
     }
 }

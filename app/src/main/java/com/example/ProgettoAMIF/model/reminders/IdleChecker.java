@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model;
+package com.example.ProgettoAMIF.model.reminders;
 
 import android.app.KeyguardManager;
 import android.app.Notification;
@@ -62,6 +62,7 @@ public class IdleChecker extends Service{
                         .setContentText("Idle Checker in work.")
                         .setSmallIcon(R.drawable.ic_launcher_foreground)
                         .setContentIntent(pendingIntent)
+                        .setNotificationSilent()
                         .build();
         // Notification ID cannot be 0.
         // associate this service with a notification so it will become a Foreground Service
@@ -142,7 +143,7 @@ public class IdleChecker extends Service{
 
         // IF it's passed more than alertInterval time since lastMovement time, alert and reset lastMovement time.
         if(System.currentTimeMillis() > lastMovement + alertInterval){
-            Alert("Sei stato fermo con il telefono per troppo tempo!");
+            Alert("It has been so long, Heads Up and take a break!");
             lastMovement = System.currentTimeMillis();
         }
 

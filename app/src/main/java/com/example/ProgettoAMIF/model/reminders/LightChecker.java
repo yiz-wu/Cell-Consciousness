@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model;
+package com.example.ProgettoAMIF.model.reminders;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -30,6 +30,8 @@ import java.io.InputStreamReader;
 public class LightChecker extends Service{
 
     private static final String TAG = "LigntChecker";
+    public static final String AlertMsg1 = "Your screen may be barking at you, turn down your phone's brightness!";
+    public static final String AlertMsg2 = "The environment may be too bright, increase your phone's brightness!";
     private Context context;
     private SensorManager sensorManager;
     private Sensor sensor;
@@ -54,6 +56,7 @@ public class LightChecker extends Service{
                         .setContentText("Light Checker in work.")
                         .setSmallIcon(R.drawable.ic_launcher_foreground)
                         .setContentIntent(pendingIntent)
+                        .setNotificationSilent()
                         .build();
         // Notification ID cannot be 0.
         // associate this service with a notification so it will become a Foreground Service
@@ -129,15 +132,15 @@ public class LightChecker extends Service{
         // MIUI 's scrren_brightness range is [0-4000]
         if(isMIUIasString.equals("true")){
             if(ambienteLumens <= 10 && brightness >= 100)
-                Alert("Lo schermo ti sta abbaiando, abbassa la luminosita!");
+                Alert(AlertMsg1);
             if(ambienteLumens >= 300 && brightness <= 1000)
-                Alert("L'ambiente e' troppo luminoso, aumenta la luminosita!");
+                Alert(AlertMsg2);
         }else{
         // others android device's screen brightness range is [0-255]
             if(ambienteLumens <= 10 && brightness >= 65)
-                Alert("Lo schermo ti sta abbaiando, abbassa la luminosita!");
+                Alert(AlertMsg1);
             if(ambienteLumens >= 300 && brightness <= 190)
-                Alert("L'ambiente e' troppo luminoso, aumenta la luminosita!");
+                Alert(AlertMsg2);
         }
     }
 

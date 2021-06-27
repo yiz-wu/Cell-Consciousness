@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model;
+package com.example.ProgettoAMIF.model.reminders;
 
 import android.app.KeyguardManager;
 import android.app.Notification;
@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.example.ProgettoAMIF.UI.MainActivity;
-import com.example.ProgettoAMIF.UI.MainActivity2;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
 import com.example.ProgettoAMIF.model.notificationService.ToastNotification;
 import com.example.eserciziobroadcastreceiver.R;
@@ -28,6 +27,7 @@ import java.util.ArrayDeque;
 public class MovementChecker extends Service{
 
     private static final String TAG = "MovementChecker";
+    public static final String AlertMsg = "Head Up, Phone Down!";
     private Context context;
     private SensorManager sensorManager;
     private Sensor sensor;
@@ -57,6 +57,7 @@ public class MovementChecker extends Service{
                         .setContentText("Movement Checker in work.")
                         .setSmallIcon(R.drawable.ic_launcher_foreground)
                         .setContentIntent(pendingIntent)
+                        .setNotificationSilent()
                         .build();
         // Notification ID cannot be 0.
         // associate this service with a notification so it will become a Foreground Service
@@ -135,7 +136,7 @@ public class MovementChecker extends Service{
         // with test, I found out that event when walking slowly, the medium is above 1
         if( lastAccelerations.size() == milliSecondsInConsideration / sensorSamplingPeriodInMillis
             && sumOfLastAccelerations / lastAccelerations.size() > 1)
-            Alert("Alza la testa, Giu il telefono!");
+            Alert(AlertMsg);
     }
 
 

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ProgettoAMIF.data.FasciaOraria;
 import com.example.ProgettoAMIF.data.FasciaOrariaHandler;
+import com.example.ProgettoAMIF.model.FasciaOrariaListAdapter;
 import com.example.eserciziobroadcastreceiver.R;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -78,7 +79,7 @@ public class TimerFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.i(TAG, "onResume");
-        tvHello.setText(String.format("Hello %s", sharedPref.getString("name", "User")));
+        tvHello.setText(String.format("Hello %s!", sharedPref.getString("name", "User")));
     }
 
     @Override

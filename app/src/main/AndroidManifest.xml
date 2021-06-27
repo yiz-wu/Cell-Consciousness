@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProgettoAMIF">
-        <activity android:name="com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.TransparentActivity" android:theme="@style/MyTranslucentTheme"></activity>
+        <activity android:name="com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.DialogActivity" android:theme="@style/MyTranslucentTheme"></activity>
         <activity android:name="com.example.ProgettoAMIF.UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,13 +26,14 @@
         <service android:name="com.example.ProgettoAMIF.model.detectors.TouchDetectService" />
         <service android:name="com.example.ProgettoAMIF.model.FasciaOrariaExecutor" />
         <service android:name="com.example.ProgettoAMIF.model.notificationService.statusBarSystem.CancelNotificationAndGoHomeScreen" />
-
+        <service android:name="com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.DialogNotification" />
         <!-- secondary functions -->
-        <service android:name="com.example.ProgettoAMIF.model.LightChecker" />
-        <service android:name="com.example.ProgettoAMIF.model.MovementChecker" />
-        <service android:name="com.example.ProgettoAMIF.model.IdleChecker" />
+        <service android:name="com.example.ProgettoAMIF.model.reminders.LightChecker" />
+        <service android:name="com.example.ProgettoAMIF.model.reminders.MovementChecker" />
+        <service android:name="com.example.ProgettoAMIF.model.reminders.IdleChecker" />
 
-        <receiver android:name="com.example.ProgettoAMIF.model.StopRemindersReceiver" />
+        <receiver android:name="com.example.ProgettoAMIF.model.reminders.StopRemindersReceiver" />
+        <receiver android:name="com.example.ProgettoAMIF.model.ExecuteFasciaOrariaReceiver" />
 
     </application>
 

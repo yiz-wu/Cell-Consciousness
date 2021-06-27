@@ -1,8 +1,10 @@
 package com.example.ProgettoAMIF.model.notificationService.statusBarSystem;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -34,7 +36,10 @@ public class StatusBarNotification implements INotificationService {
         notificationBuilder.setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(NotificationTitle)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+//                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 ;
+
+
 
         // setting the notification's TAP action
         Intent intent = new Intent(context, MainActivity.class);

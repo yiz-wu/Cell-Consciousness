@@ -47,7 +47,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="9:00 - 17:00   |   30mins"
+                    android:text="9:00 - 17:00   |   30seconds"
                     android:textSize="14sp"
                     android:textStyle="normal" />
 
@@ -77,6 +77,7 @@
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:text="delete"
             android:layout_alignParentStart="true"
 
@@ -85,6 +86,7 @@
             android:id="@+id/edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
             style="?attr/materialButtonOutlinedStyle"
             android:text="edit"
             android:layout_alignParentEnd="true"

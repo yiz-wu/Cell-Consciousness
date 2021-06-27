@@ -78,7 +78,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lyMinutiPermessi"
+        android:id="@+id/lySecondiPermessi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border_light"
@@ -92,14 +92,14 @@
         >
 
         <TextView
-            android:id="@+id/minutiPermessiDescription"
+            android:id="@+id/secondiPermessiDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Allowed distraction minutes"
+            android:text="Allowed distraction seconds"
             android:textAlignment="center" />
 
         <NumberPicker
-            android:id="@+id/minutiPermessi"
+            android:id="@+id/secondiPermessi"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             />
@@ -116,7 +116,7 @@
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lyMinutiPermessi"
+        app:layout_constraintTop_toBottomOf="@+id/lySecondiPermessi"
         android:orientation="vertical"
         >
 

@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
@@ -45,11 +46,17 @@ public class TouchDetectService extends Service implements ITouchDetector {
                 return false;
             }
         });
+        int LAYOUT_FLAG;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
+        }
 
         params = new LayoutParams(
                 1, /* width */
                 1, /* height */
-                LayoutParams.TYPE_PHONE,
+                LAYOUT_FLAG,
                 LayoutParams.FLAG_NOT_FOCUSABLE |
                         LayoutParams.FLAG_NOT_TOUCH_MODAL |
                         LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,

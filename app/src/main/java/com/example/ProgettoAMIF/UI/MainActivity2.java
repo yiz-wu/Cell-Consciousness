@@ -29,13 +29,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ProgettoAMIF.model.IdleChecker;
-import com.example.ProgettoAMIF.model.LightChecker;
-import com.example.ProgettoAMIF.model.MovementChecker;
-import com.example.ProgettoAMIF.model.detectors.ScreenUnlockBroadcastReceiver;
+import com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.DialogActivity;
+import com.example.ProgettoAMIF.model.reminders.IdleChecker;
+import com.example.ProgettoAMIF.model.reminders.LightChecker;
+import com.example.ProgettoAMIF.model.reminders.MovementChecker;
+import com.example.ProgettoAMIF.model.detectors.ScreenStateReceiver;
 import com.example.eserciziobroadcastreceiver.R;
 import com.example.ProgettoAMIF.model.notificationService.statusBarSystem.StatusBarNotification;
-import com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.TransparentActivity;
 
 
 public class MainActivity2 extends AppCompatActivity{
@@ -204,7 +204,7 @@ public class MainActivity2 extends AppCompatActivity{
                         ;
 
 
-                Intent dialogIntent = new Intent(context, TransparentActivity.class);
+                Intent dialogIntent = new Intent(context, DialogActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                 PendingIntent dialogPendingIntent = PendingIntent.getActivity(context, 10, dialogIntent, 0);
@@ -278,7 +278,7 @@ public class MainActivity2 extends AppCompatActivity{
         screenFilter.addAction(Intent.ACTION_SCREEN_OFF);
         screenFilter.addAction(Intent.ACTION_USER_PRESENT);
 
-        screenReceiver = new ScreenUnlockBroadcastReceiver(this);
+        screenReceiver = new ScreenStateReceiver(this);
         registerReceiver(screenReceiver, screenFilter);
 
     }

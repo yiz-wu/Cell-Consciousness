@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model;
+package com.example.ProgettoAMIF.model.reminders;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
