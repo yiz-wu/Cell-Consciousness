@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.reminder.ReminderFragment">
+    tools:context="com.example.ProgettoAMIF.UI.reminder.ReminderFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutHeader"
@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
-        android:background="@drawable/border_light"
+        android:background="@drawable/shadow_effect"
         >
 
         <LinearLayout
@@ -102,7 +102,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:checked="true" />
+                android:checked="false" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -118,7 +118,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lyAccount"
-        android:background="@drawable/border_light"
+        android:background="@drawable/shadow_effect"
         >
 
         <LinearLayout
@@ -180,7 +180,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:checked="true" />
+                android:checked="false" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -196,7 +196,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MovementChecker"
-        android:background="@drawable/border_light"
+        android:background="@drawable/shadow_effect"
         >
 
         <LinearLayout
@@ -258,57 +258,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:checked="true" />
+                android:checked="false" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
-        android:id="@+id/lySpiegazione"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
-        android:visibility="gone"
-        >
-
-        <TextView
-                android:id="@+id/spiegazione_titolo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/brightness"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/spiegazione_descrizione"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descrizione di questa funzionalitaaldjlajdlajdlajladjlajdlajdladjlajdljaldjladj ladjlajdlajd ladjlaj ljal jad la jal jdljald jaldj laj lajd laj lja ldjlad jladj laj dljad ljd ljajd laj laj d"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:id="@+id/spiegazione_immagine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_add_24"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-
-        <Button
-            android:id="@+id/spiegazione_closeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="close" />
-
-    </LinearLayout>
 
 
     <LinearLayout
@@ -322,13 +275,14 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:background="@drawable/border_light"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="To save battery, reminders automatically stop in this period"
+            android:text="@string/reminder_autostop_description"
             android:textSize="15sp"
             android:textStyle="normal" />
 
@@ -370,26 +324,56 @@
                     android:textSize="15sp"
                     android:textStyle="normal" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="-"
-                    android:textSize="15sp"
-                    android:textStyle="normal" />
-
-                <TextView
-                    android:id="@+id/reminderRestartTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/border_light"
-                    android:text="08:00"
-                    android:textSize="15sp"
-                    android:textStyle="normal" />
 
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lySpiegazione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutHeader"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/spiegazione_titolo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/brightness"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/spiegazione_descrizione"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descrizione di questa funzionalitaaldjlajdlajdlajladjlajdlajdladjlajdljaldjladj ladjlajdlajd ladjlaj ljal jad la jal jdljald jaldj laj lajd laj lja ldjlad jladj laj dljad ljd ljajd laj laj d"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/spiegazione_immagine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_24"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/spiegazione_closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="close" />
 
     </LinearLayout>
 

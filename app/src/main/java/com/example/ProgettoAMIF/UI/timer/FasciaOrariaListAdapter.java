@@ -175,8 +175,10 @@ public class FasciaOrariaListAdapter extends ArrayAdapter<FasciaOraria> {
                     return;
                 Log.i(TAG, "onCheckedChanged of "+name+" : " + isChecked);
                 if(isChecked){
+                    fasciaOrariaHandler.enableFasciaOraria(ID);
                     Toast.makeText(context, "Activated!", Toast.LENGTH_SHORT).show();
                 } else {
+                    fasciaOrariaHandler.disableFasciaOraria(ID);
                     Toast.makeText(context, "Deactivated!", Toast.LENGTH_SHORT).show();
                 }
                 fasciaOraria.setActive(isChecked);

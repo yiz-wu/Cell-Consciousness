@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -32,6 +32,7 @@
         <service android:name="com.example.ProgettoAMIF.model.MovementChecker" />
         <service android:name="com.example.ProgettoAMIF.model.IdleChecker" />
 
+        <receiver android:name="com.example.ProgettoAMIF.model.StopRemindersReceiver" />
 
     </application>
 

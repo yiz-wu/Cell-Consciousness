@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.example.ProgettoAMIF.UI.MainActivity;
 import com.example.ProgettoAMIF.UI.MainActivity2;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
 import com.example.ProgettoAMIF.model.notificationService.ToastAndStatusBarNotification;
@@ -51,7 +52,7 @@ public class IdleChecker extends Service{
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "IdleChecker onStartCommand.");
         context = this;
-        Intent notificationIntent = new Intent(this, MainActivity2.class);
+        Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
@@ -125,7 +126,6 @@ public class IdleChecker extends Service{
         sensorManager.registerListener(sensorEventListener, sensor, sensorSamplingPeriodInMillis * 1000);
         // *1000 beacause samplingPeriodUs uses Microseconds as unit
 
-        Toast.makeText(context.getApplicationContext(), "Idle Cheker Activated.", Toast.LENGTH_SHORT).show();
     }
 
     public void Deactive(){

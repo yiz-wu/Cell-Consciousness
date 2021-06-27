@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import com.example.ProgettoAMIF.interfaces.IFasciaOrariaExecutor;
 import com.example.ProgettoAMIF.interfaces.IFasciaOrariaHandler;
 import com.example.ProgettoAMIF.model.FasciaOrariaExecutor;
+import com.example.eserciziobroadcastreceiver.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,6 +28,7 @@ public class FasciaOrariaHandler implements IFasciaOrariaHandler, Iterable<Fasci
 
     private static final String TAG = "FasciaOrariaHandler";
     private static final String listKey = "listKey";
+    private static final String defaultFasceOrarie = "[{\"ID\":1,\"active\":false,\"endHour\":14,\"endMinute\":0,\"minutiPermessi\":5,\"name\":\"SCHOOL\",\"notificationType\":0,\"startHour\":8,\"startMinute\":0},{\"ID\":2,\"active\":false,\"endHour\":17,\"endMinute\":0,\"minutiPermessi\":10,\"name\":\"WORK\",\"notificationType\":1,\"startHour\":9,\"startMinute\":0},{\"ID\":3,\"active\":false,\"endHour\":23,\"endMinute\":0,\"minutiPermessi\":1,\"name\":\"READING\",\"notificationType\":2,\"startHour\":22,\"startMinute\":0},{\"ID\":4,\"active\":false,\"endHour\":0,\"endMinute\":0,\"minutiPermessi\":10,\"name\":\"Fascia Oraria\",\"notificationType\":0,\"startHour\":0,\"startMinute\":0}]";
 
     private ArrayList<FasciaOraria> list = null;
     private IFasciaOrariaExecutor executor;
@@ -40,7 +42,9 @@ public class FasciaOrariaHandler implements IFasciaOrariaHandler, Iterable<Fasci
     @Override
     public void initFasceOrarie() {
         SharedPreferences sharedPreferences = ((Activity) context).getPreferences(Context.MODE_PRIVATE);
-        String jsonObject = sharedPreferences.getString(listKey, "[]");
+        String jsonObject = sharedPreferences.getString(listKey, defaultFasceOrarie);
+
+
 
         Gson gson = new Gson();
         Type collectionType = new TypeToken<ArrayList<FasciaOraria>>(){}.getType();

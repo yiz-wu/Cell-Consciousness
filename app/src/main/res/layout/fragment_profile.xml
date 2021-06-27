@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.ProfileFragment">
+    tools:context="com.example.ProgettoAMIF.UI.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutHeader"
@@ -31,13 +31,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lyAccount"
-        android:layout_width="388dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
 
         android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/border"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shadow_effect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutHeader">
@@ -89,6 +89,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:text="Change"
+                    android:layout_marginEnd="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -107,6 +108,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="50dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/border_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,10 +123,10 @@
             android:text=" Connect to FaceBook"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:drawableLeft="@drawable/ic_facebook"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_facebook" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -135,6 +138,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:background="@drawable/border_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -148,10 +153,10 @@
             android:text=" LeaderBoard"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:drawableLeft="@drawable/ic_leaderboard"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_leaderboard" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -95,9 +95,8 @@
             android:id="@+id/minutiPermessiDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Allowed distraction time"
-            android:textAlignment="center"
-            />
+            android:text="Allowed distraction minutes"
+            android:textAlignment="center" />
 
         <NumberPicker
             android:id="@+id/minutiPermessi"

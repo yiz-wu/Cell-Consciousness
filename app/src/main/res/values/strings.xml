@@ -25,5 +25,9 @@
     <string name="spiegazione_idle_alert">TODO spiegazione_idle_alert</string>
     <string name="confirm">Confirm</string>
     <string name="change">Change</string>
+    <string name="permission">Permission</string>
+    <string name="grant_permission_button">grant permission</string>
+    <string name="ask_permission_message">This application needs "Draw over other apps" permission in order to work. Please click the button, select this app from list and grant the permission :)</string>
+    <string name="reminder_autostop_description">To save battery, reminders automatically stop at</string>
 
 </resources>

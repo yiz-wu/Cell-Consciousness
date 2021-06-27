@@ -18,7 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.example.ProgettoAMIF.UI.MainActivity2;
+import com.example.ProgettoAMIF.UI.MainActivity;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
 import com.example.ProgettoAMIF.model.notificationService.ToastNotification;
 import com.example.eserciziobroadcastreceiver.R;
@@ -44,7 +44,7 @@ public class LightChecker extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "LightChecker onStartCommand.");
-        Intent notificationIntent = new Intent(this, MainActivity2.class);
+        Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
@@ -103,8 +103,6 @@ public class LightChecker extends Service{
             public void onAccuracyChanged(Sensor sensor, int accuracy) {      }
         };
         sensorManager.registerListener(lightEventListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-
-        Toast.makeText(context.getApplicationContext(), "Light Cheker Activated.", Toast.LENGTH_SHORT).show();
     }
 
     public void Deactive(){

@@ -71,6 +71,7 @@ public class TimerFragment extends Fragment {
     private void addFasciaOrariaRow() {
         Log.i(TAG, "addFasciaOrariaRow");
         fasciaOrariaHandler.addFasciaOraria(new FasciaOraria());
+        fasciaOrariaHandler.printList(TAG);
     }
 
     @Override

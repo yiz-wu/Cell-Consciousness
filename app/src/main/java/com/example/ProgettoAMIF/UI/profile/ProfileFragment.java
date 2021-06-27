@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -41,21 +42,19 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         context = getContext();
         ivAccountIcon = root.findViewById(R.id.ivAccountIcon);
         tvName = root.findViewById(R.id.tvName);
         sharedPref = context.getSharedPreferences("name",Context.MODE_PRIVATE);
-        tvName.setText(sharedPref.getString("name", "User"));
-
         lyConnectFB = root.findViewById(R.id.lyConnectFB);
         lyLeaderboard = root.findViewById(R.id.lyLeaderboard);
+
         View.OnClickListener coming_soon = new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(),"Coming soon", Toast.LENGTH_SHORT ).show();
-            }
+            public void onClick(View v) {   Toast.makeText(getContext(),"Coming soon", Toast.LENGTH_SHORT ).show();    }
         };
         lyConnectFB.setOnClickListener(coming_soon);
         lyLeaderboard.setOnClickListener(coming_soon);
@@ -75,7 +74,6 @@ public class ProfileFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String newName = editText.getText().toString();
                         tvName.setText(newName);
-                        sharedPref = context.getSharedPreferences("name",Context.MODE_PRIVATE);
                         editor = sharedPref.edit();
                         editor.putString("name", newName);
                         editor.apply();
@@ -84,14 +82,18 @@ public class ProfileFragment extends Fragment {
                 });
 
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // nothing
-                    }
+                    public void onClick(DialogInterface dialog, int whichButton) { }
                 });
-
                 alert.show();
             }
         });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        tvName.setText(sharedPref.getString("name", "User"));
 
     }
 

@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.ProgettoAMIF.UI.MainActivity;
 import com.example.ProgettoAMIF.UI.MainActivity2;
 import com.example.eserciziobroadcastreceiver.R;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
@@ -36,7 +37,7 @@ public class StatusBarNotification implements INotificationService {
                 ;
 
         // setting the notification's TAP action
-        Intent intent = new Intent(context, MainActivity2.class);
+        Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         notificationBuilder
@@ -45,9 +46,6 @@ public class StatusBarNotification implements INotificationService {
                 ;
 
         // first button  HomeScreen
-//        Intent startMain = new Intent(Intent.ACTION_MAIN);
-//        startMain.addCategory(Intent.CATEGORY_HOME);
-//        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Intent cancelAndGoHome = new Intent(context, CancelNotificationAndGoHomeScreen.class);
         PendingIntent startMainPendingIntent = PendingIntent.getService(context, 10, cancelAndGoHome, 0);
         notificationBuilder
