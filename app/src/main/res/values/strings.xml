@@ -22,7 +22,7 @@
     <string name="movement">Movement</string>
     <string name="spiegazione_movement">Please Do not Use cellphone in movement, it\'s risking your life. We can reminder you if you forget it ;)</string>
     <string name="idle_alert">Idle Alert</string>
-    <string name="spiegazione_idle_alert">Dont spend too much time idle, every now and then Heads Up and take a break. We can reminder you if you forget it ;)</string>
+    <string name="spiegazione_idle_alert">Do not spend too much time idle, every now and then Heads Up and take a break. We can reminder you every 30 minutes if you forget it ;)</string>
     <string name="confirm">Confirm</string>
     <string name="change">Change</string>
     <string name="permission">Permission</string>

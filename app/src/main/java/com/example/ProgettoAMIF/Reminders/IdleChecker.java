@@ -40,9 +40,9 @@ public class IdleChecker extends Service{
     private ArrayDeque<Double> lastAccelerations = null;
 
     private long lastMovement = 0;
-//    private final int alertInterval = 1000 * 60 * 10; // 10 minutes -> 600 seconds
+    private final int alertInterval = 1000 * 60 * 30; // 30 minutes -> 1800 seconds
 
-    private final int alertInterval = 21000;  // fot test purpose
+//    private final int alertInterval = 21000;  // fot test purpose
 
     private boolean userWasUsingPhone = false;
 
