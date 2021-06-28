@@ -23,6 +23,7 @@ import com.example.eserciziobroadcastreceiver.R;
 
 public class ProfileFragment extends Fragment {
 
+    public static final String COMING_SOON = "Coming soon, or maybe not";
     private final String TAG = "ProfileFragment";
     View root;
     private SharedPreferences sharedPref;
@@ -54,7 +55,7 @@ public class ProfileFragment extends Fragment {
 
         View.OnClickListener coming_soon = new View.OnClickListener() {
             @Override
-            public void onClick(View v) {   Toast.makeText(getContext(),"Coming soon", Toast.LENGTH_SHORT ).show();    }
+            public void onClick(View v) {   Toast.makeText(getContext(), COMING_SOON, Toast.LENGTH_SHORT ).show();    }
         };
         lyConnectFB.setOnClickListener(coming_soon);
         lyLeaderboard.setOnClickListener(coming_soon);
