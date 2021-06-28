@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model.reminders;
+package com.example.ProgettoAMIF.reminders;
 
 import android.app.KeyguardManager;
 import android.app.Notification;
@@ -19,7 +19,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.ProgettoAMIF.UI.MainActivity;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
-import com.example.ProgettoAMIF.model.notificationService.ToastNotification;
+import com.example.ProgettoAMIF.notificationService.ToastNotification;
 import com.example.eserciziobroadcastreceiver.R;
 
 import java.util.ArrayDeque;
@@ -133,9 +133,9 @@ public class MovementChecker extends Service{
         lastAccelerations.addLast(accelerationModule);
         Log.i(TAG, "sumOfLastAccelerations : " + sumOfLastAccelerations);
 
-        // with test, I found out that event when walking slowly, the medium is above 1
+        // with test, I found out that event when walking slowly, the medium is above 1.2
         if( lastAccelerations.size() == milliSecondsInConsideration / sensorSamplingPeriodInMillis
-            && sumOfLastAccelerations / lastAccelerations.size() > 1)
+            && sumOfLastAccelerations / lastAccelerations.size() > 1.2)
             Alert(AlertMsg);
     }
 

@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model.notificationService;
+package com.example.ProgettoAMIF.notificationService;
 
 import android.content.Context;
 import android.widget.Toast;

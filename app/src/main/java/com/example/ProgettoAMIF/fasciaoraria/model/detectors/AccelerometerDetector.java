@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model.detectors;
+package com.example.ProgettoAMIF.fasciaoraria.model.detectors;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.ProgettoAMIF.interfaces.IAccelerometerDetector;
 import com.example.eserciziobroadcastreceiver.R;
-import com.example.ProgettoAMIF.model.FasciaOrariaExecutor;
+import com.example.ProgettoAMIF.fasciaoraria.model.FasciaOrariaExecutor;
 
 public class AccelerometerDetector implements SensorEventListener , IAccelerometerDetector {
 

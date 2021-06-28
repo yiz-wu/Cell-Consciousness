@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model;
+package com.example.ProgettoAMIF.fasciaoraria.model;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,8 +23,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 
 
-import com.example.ProgettoAMIF.data.FasciaOraria;
-import com.example.ProgettoAMIF.data.FasciaOrariaHandler;
+import com.example.ProgettoAMIF.fasciaoraria.data.FasciaOraria;
+import com.example.ProgettoAMIF.fasciaoraria.data.FasciaOrariaHandler;
 import com.example.eserciziobroadcastreceiver.R;
 
 import java.util.ArrayList;

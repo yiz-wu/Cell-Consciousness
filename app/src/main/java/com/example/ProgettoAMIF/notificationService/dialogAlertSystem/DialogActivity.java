@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem;
+package com.example.ProgettoAMIF.notificationService.dialogAlertSystem;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

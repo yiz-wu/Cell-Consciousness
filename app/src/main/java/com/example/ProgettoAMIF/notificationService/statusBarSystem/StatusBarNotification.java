@@ -1,17 +1,14 @@
-package com.example.ProgettoAMIF.model.notificationService.statusBarSystem;
+package com.example.ProgettoAMIF.notificationService.statusBarSystem;
 
-import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.ProgettoAMIF.UI.MainActivity;
-import com.example.ProgettoAMIF.UI.MainActivity2;
 import com.example.eserciziobroadcastreceiver.R;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
 

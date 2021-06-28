@@ -1,13 +1,12 @@
-package com.example.ProgettoAMIF.model.detectors;
+package com.example.ProgettoAMIF.fasciaoraria.model.detectors;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.ProgettoAMIF.interfaces.IScreenDetector;
 import com.example.eserciziobroadcastreceiver.R;
-import com.example.ProgettoAMIF.model.FasciaOrariaExecutor;
+import com.example.ProgettoAMIF.fasciaoraria.model.FasciaOrariaExecutor;
 
 public class ScreenStateReceiver extends BroadcastReceiver{
 

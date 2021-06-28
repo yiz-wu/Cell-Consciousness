@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.data;
+package com.example.ProgettoAMIF.fasciaoraria.data;
 
 
 public class FasciaOraria {
@@ -76,7 +76,7 @@ public class FasciaOraria {
 
     public FasciaOraria(){
         this.ID = FasciaOraria.IDpool++;
-        this.name = "Fascia Oraria";
+        this.name = "Time Slot";
         this.active = false;
         this.startHour = 0;
         this.startMinute = 0;

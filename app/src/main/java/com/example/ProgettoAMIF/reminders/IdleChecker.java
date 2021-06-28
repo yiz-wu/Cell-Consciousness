@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model.reminders;
+package com.example.ProgettoAMIF.reminders;
 
 import android.app.KeyguardManager;
 import android.app.Notification;
@@ -18,9 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.example.ProgettoAMIF.UI.MainActivity;
-import com.example.ProgettoAMIF.UI.MainActivity2;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
-import com.example.ProgettoAMIF.model.notificationService.ToastAndStatusBarNotification;
+import com.example.ProgettoAMIF.notificationService.ToastAndStatusBarNotification;
 import com.example.eserciziobroadcastreceiver.R;
 
 import java.util.ArrayDeque;

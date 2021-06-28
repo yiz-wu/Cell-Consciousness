@@ -24,10 +24,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.ProgettoAMIF.model.reminders.IdleChecker;
-import com.example.ProgettoAMIF.model.reminders.LightChecker;
-import com.example.ProgettoAMIF.model.reminders.MovementChecker;
-import com.example.ProgettoAMIF.model.reminders.StopRemindersReceiver;
+import com.example.ProgettoAMIF.reminders.IdleChecker;
+import com.example.ProgettoAMIF.reminders.LightChecker;
+import com.example.ProgettoAMIF.reminders.MovementChecker;
+import com.example.ProgettoAMIF.reminders.StopRemindersReceiver;
 import com.example.eserciziobroadcastreceiver.R;
 
 import java.util.Calendar;
@@ -212,6 +212,9 @@ public class ReminderFragment extends Fragment {
                 // stop time has already passed -> stop reminders right now
                 if(stopHour<calendar.get(Calendar.HOUR_OF_DAY) || (stopHour==calendar.get(Calendar.HOUR_OF_DAY) && stopMinute <= calendar.get(Calendar.MINUTE))){
                     context.sendBroadcast(intent);
+                    switchIdle.setChecked(false);
+                    switchLight.setChecked(false);
+                    switchMovement.setChecked(false);
                 } else { // otherwise set the alarm to send intent
                     calendar.set(Calendar.HOUR_OF_DAY, stopHour);
                     calendar.set(Calendar.MINUTE, stopMinute);

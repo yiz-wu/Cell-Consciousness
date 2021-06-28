@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProgettoAMIF">
-        <activity android:name="com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.DialogActivity" android:theme="@style/MyTranslucentTheme"></activity>
+        <activity android:name="com.example.ProgettoAMIF.notificationService.dialogAlertSystem.DialogActivity" android:theme="@style/MyTranslucentTheme"></activity>
         <activity android:name="com.example.ProgettoAMIF.UI.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,17 +23,17 @@
         </activity>
 
 
-        <service android:name="com.example.ProgettoAMIF.model.detectors.TouchDetectService" />
-        <service android:name="com.example.ProgettoAMIF.model.FasciaOrariaExecutor" />
-        <service android:name="com.example.ProgettoAMIF.model.notificationService.statusBarSystem.CancelNotificationAndGoHomeScreen" />
-        <service android:name="com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem.DialogNotification" />
+        <service android:name="com.example.ProgettoAMIF.fasciaoraria.model.detectors.TouchDetectService" />
+        <service android:name="com.example.ProgettoAMIF.fasciaoraria.model.FasciaOrariaExecutor" />
+        <service android:name="com.example.ProgettoAMIF.notificationService.statusBarSystem.CancelNotificationAndGoHomeScreen" />
+        <service android:name="com.example.ProgettoAMIF.notificationService.dialogAlertSystem.DialogNotification" />
         <!-- secondary functions -->
-        <service android:name="com.example.ProgettoAMIF.model.reminders.LightChecker" />
-        <service android:name="com.example.ProgettoAMIF.model.reminders.MovementChecker" />
-        <service android:name="com.example.ProgettoAMIF.model.reminders.IdleChecker" />
+        <service android:name="com.example.ProgettoAMIF.reminders.LightChecker" />
+        <service android:name="com.example.ProgettoAMIF.reminders.MovementChecker" />
+        <service android:name="com.example.ProgettoAMIF.reminders.IdleChecker" />
 
-        <receiver android:name="com.example.ProgettoAMIF.model.reminders.StopRemindersReceiver" />
-        <receiver android:name="com.example.ProgettoAMIF.model.ExecuteFasciaOrariaReceiver" />
+        <receiver android:name="com.example.ProgettoAMIF.reminders.StopRemindersReceiver" />
+        <receiver android:name="com.example.ProgettoAMIF.fasciaoraria.model.ExecuteFasciaOrariaReceiver" />
 
     </application>
 

@@ -1,10 +1,10 @@
-package com.example.ProgettoAMIF.model.notificationService;
+package com.example.ProgettoAMIF.notificationService;
 
 import android.content.Context;
 import android.widget.Toast;
 
 import com.example.ProgettoAMIF.interfaces.INotificationService;
-import com.example.ProgettoAMIF.model.notificationService.statusBarSystem.StatusBarNotification;
+import com.example.ProgettoAMIF.notificationService.statusBarSystem.StatusBarNotification;
 
 public class ToastAndStatusBarNotification implements INotificationService {
 

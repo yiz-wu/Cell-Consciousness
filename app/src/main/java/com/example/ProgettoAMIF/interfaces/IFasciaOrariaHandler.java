@@ -1,6 +1,6 @@
 package com.example.ProgettoAMIF.interfaces;
 
-import com.example.ProgettoAMIF.data.FasciaOraria;
+import com.example.ProgettoAMIF.fasciaoraria.data.FasciaOraria;
 
 public interface IFasciaOrariaHandler {
 

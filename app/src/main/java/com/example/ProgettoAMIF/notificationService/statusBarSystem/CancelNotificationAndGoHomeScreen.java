@@ -1,15 +1,13 @@
-package com.example.ProgettoAMIF.model.notificationService.statusBarSystem;
+package com.example.ProgettoAMIF.notificationService.statusBarSystem;
 
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class CancelNotificationAndGoHomeScreen extends Service {
 

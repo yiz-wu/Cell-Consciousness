@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model.notificationService.dialogAlertSystem;
+package com.example.ProgettoAMIF.notificationService.dialogAlertSystem;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

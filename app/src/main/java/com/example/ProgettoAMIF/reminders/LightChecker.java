@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.model.reminders;
+package com.example.ProgettoAMIF.reminders;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -20,7 +20,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.ProgettoAMIF.UI.MainActivity;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
-import com.example.ProgettoAMIF.model.notificationService.ToastNotification;
+import com.example.ProgettoAMIF.notificationService.ToastNotification;
 import com.example.eserciziobroadcastreceiver.R;
 
 import java.io.BufferedReader;

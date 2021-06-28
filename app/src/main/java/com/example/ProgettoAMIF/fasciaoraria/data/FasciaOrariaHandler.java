@@ -1,4 +1,4 @@
-    package com.example.ProgettoAMIF.data;
+    package com.example.ProgettoAMIF.fasciaoraria.data;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 
 import com.example.ProgettoAMIF.interfaces.IFasciaOrariaExecutor;
 import com.example.ProgettoAMIF.interfaces.IFasciaOrariaHandler;
-import com.example.ProgettoAMIF.model.ExecuteFasciaOrariaReceiver;
-import com.example.ProgettoAMIF.model.FasciaOrariaExecutor;
+import com.example.ProgettoAMIF.fasciaoraria.model.ExecuteFasciaOrariaReceiver;
+import com.example.ProgettoAMIF.fasciaoraria.model.FasciaOrariaExecutor;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
