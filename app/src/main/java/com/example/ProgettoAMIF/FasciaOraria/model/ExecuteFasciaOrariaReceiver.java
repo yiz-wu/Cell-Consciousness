@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.fasciaoraria.model;
+package com.example.ProgettoAMIF.FasciaOraria.model;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.fasciaoraria.model;
+package com.example.ProgettoAMIF.FasciaOraria;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,8 +23,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 
 
-import com.example.ProgettoAMIF.fasciaoraria.data.FasciaOraria;
-import com.example.ProgettoAMIF.fasciaoraria.data.FasciaOrariaHandler;
+import com.example.ProgettoAMIF.FasciaOraria.data.FasciaOraria;
+import com.example.ProgettoAMIF.FasciaOraria.data.FasciaOrariaHandler;
 import com.example.eserciziobroadcastreceiver.R;
 
 import java.util.ArrayList;
@@ -176,8 +176,13 @@ public class FasciaOrariaListAdapter extends ArrayAdapter<FasciaOraria> {
                     return;
                 Log.i(TAG, "onCheckedChanged of "+name+" : " + isChecked);
                 if(isChecked){
-                    fasciaOrariaHandler.enableFasciaOraria(ID);
-                    Toast.makeText(context, "Activated!", Toast.LENGTH_SHORT).show();
+                    if(fasciaOrariaHandler.enableFasciaOraria(ID))
+                        Toast.makeText(context, "Activated!", Toast.LENGTH_SHORT).show();
+                    else{
+                        Toast.makeText(context, "Overlapping with another time slot.", Toast.LENGTH_SHORT).show();
+                        switchFasciaOraria.setChecked(false);
+                        return;
+                    }
                 } else {
                     fasciaOrariaHandler.disableFasciaOraria(ID);
                     Toast.makeText(context, "Deactivated!", Toast.LENGTH_SHORT).show();

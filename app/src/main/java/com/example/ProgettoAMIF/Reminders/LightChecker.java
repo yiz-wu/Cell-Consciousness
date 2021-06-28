@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.reminders;
+package com.example.ProgettoAMIF.Reminders;
 
 import android.app.Notification;
 import android.app.PendingIntent;

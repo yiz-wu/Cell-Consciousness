@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.UI.reminder;
+package com.example.ProgettoAMIF.UI.Fragment;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -24,10 +24,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.ProgettoAMIF.reminders.IdleChecker;
-import com.example.ProgettoAMIF.reminders.LightChecker;
-import com.example.ProgettoAMIF.reminders.MovementChecker;
-import com.example.ProgettoAMIF.reminders.StopRemindersReceiver;
+import com.example.ProgettoAMIF.Reminders.IdleChecker;
+import com.example.ProgettoAMIF.Reminders.LightChecker;
+import com.example.ProgettoAMIF.Reminders.MovementChecker;
+import com.example.ProgettoAMIF.Reminders.StopRemindersReceiver;
 import com.example.eserciziobroadcastreceiver.R;
 
 import java.util.Calendar;

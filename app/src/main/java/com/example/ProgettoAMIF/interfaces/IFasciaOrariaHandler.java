@@ -1,6 +1,6 @@
 package com.example.ProgettoAMIF.interfaces;
 
-import com.example.ProgettoAMIF.fasciaoraria.data.FasciaOraria;
+import com.example.ProgettoAMIF.FasciaOraria.data.FasciaOraria;
 
 public interface IFasciaOrariaHandler {
 
@@ -15,7 +15,7 @@ public interface IFasciaOrariaHandler {
     public void deleteFasciaOrariaByID(int ID);
     public void deleteFasciaOrariaByName(String name);
     public void deleteAll();
-    public void enableFasciaOraria(int ID);
+    public boolean enableFasciaOraria(int ID);
     public void disableFasciaOraria(int ID);
 
 }

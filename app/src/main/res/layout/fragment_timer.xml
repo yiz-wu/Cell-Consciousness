@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ProgettoAMIF.UI.timer.TimerFragment"
+    tools:context="com.example.ProgettoAMIF.UI.Fragment.TimerFragment"
     android:orientation="vertical"
     >
 
@@ -38,8 +38,8 @@
         android:layout_height="0dp"
         android:scrollbars="vertical"
         android:divider="@android:color/transparent"
-        android:dividerHeight="20dp"
-        android:paddingTop="20dp"
+        android:dividerHeight="30dp"
+        android:paddingTop="40dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"

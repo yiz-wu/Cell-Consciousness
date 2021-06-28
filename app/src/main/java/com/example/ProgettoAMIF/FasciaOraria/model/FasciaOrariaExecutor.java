@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.fasciaoraria.model;
+package com.example.ProgettoAMIF.FasciaOraria.model;
 
 import android.app.KeyguardManager;
 import android.app.Notification;
@@ -15,13 +15,13 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.example.ProgettoAMIF.UI.MainActivity;
-import com.example.ProgettoAMIF.fasciaoraria.data.FasciaOraria;
+import com.example.ProgettoAMIF.FasciaOraria.data.FasciaOraria;
 import com.example.ProgettoAMIF.interfaces.IAccelerometerDetector;
 import com.example.ProgettoAMIF.interfaces.IFasciaOrariaExecutor;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
 import com.example.ProgettoAMIF.interfaces.IScreenDetector;
 import com.example.ProgettoAMIF.interfaces.ITouchDetector;
-import com.example.ProgettoAMIF.fasciaoraria.model.detectors.ScreenStateReceiver;
+import com.example.ProgettoAMIF.FasciaOraria.model.detectors.ScreenStateReceiver;
 import com.example.ProgettoAMIF.notificationService.ToastAndStatusBarNotification;
 import com.example.ProgettoAMIF.notificationService.ToastNotification;
 import com.example.ProgettoAMIF.notificationService.dialogAlertSystem.DialogNotification;

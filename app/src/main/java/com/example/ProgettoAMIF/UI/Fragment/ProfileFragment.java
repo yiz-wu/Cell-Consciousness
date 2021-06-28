@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.UI.profile;
+package com.example.ProgettoAMIF.UI.Fragment;
 
 import android.content.Context;
 import android.content.DialogInterface;

@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.reminders;
+package com.example.ProgettoAMIF.Reminders;
 
 import android.app.KeyguardManager;
 import android.app.Notification;
@@ -19,14 +19,15 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.ProgettoAMIF.UI.MainActivity;
 import com.example.ProgettoAMIF.interfaces.INotificationService;
-import com.example.ProgettoAMIF.notificationService.ToastAndStatusBarNotification;
+import com.example.ProgettoAMIF.notificationService.ToastNotification;
 import com.example.eserciziobroadcastreceiver.R;
 
 import java.util.ArrayDeque;
 
-public class IdleChecker extends Service{
+public class MovementChecker extends Service{
 
-    private static final String TAG = "IdleAlerter";
+    private static final String TAG = "MovementChecker";
+    public static final String AlertMsg = "Head Up, Phone Down!";
     private Context context;
     private SensorManager sensorManager;
     private Sensor sensor;
@@ -34,22 +35,17 @@ public class IdleChecker extends Service{
     private KeyguardManager keyguardManager;
     private INotificationService notificationService;
 
-    private final int sensorSamplingPeriodInMillis = 3000;  // measure every 3 seconds
-    private final int milliSecondsInConsideration = 15000;  // considerate last 15 seconds -> 5 measurement
+    private final int sensorSamplingPeriodInMillis = 500;   // measure every 0.5 seconds
+    private final int milliSecondsInConsideration = 5000;   // consider last 5 seconds measurement
+    private long lastAlertTimeStamp = 0;
+    private final int alertIntervall = 5000; // 5 seconds
     private double sumOfLastAccelerations = 0;
     private ArrayDeque<Double> lastAccelerations = null;
-
-    private long lastMovement = 0;
-//    private final int alertInterval = 1000 * 60 * 10; // 10 minutes -> 600 seconds
-
-    private final int alertInterval = 30000;  // fot test purpose
-
-    private boolean userWasUsingPhone = false;
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "IdleChecker onStartCommand.");
+        Log.i(TAG, "MovementChecker onStartCommand.");
         context = this;
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent =
@@ -57,15 +53,15 @@ public class IdleChecker extends Service{
 
         Notification notification =
                 new NotificationCompat.Builder(this, getText(R.string.channelID).toString())
-                        .setContentTitle("Idle Checker")
-                        .setContentText("Idle Checker in work.")
+                        .setContentTitle("Movement Checker")
+                        .setContentText("Movement Checker in work.")
                         .setSmallIcon(R.drawable.ic_launcher_foreground)
                         .setContentIntent(pendingIntent)
                         .setNotificationSilent()
                         .build();
         // Notification ID cannot be 0.
         // associate this service with a notification so it will become a Foreground Service
-        startForeground(12, notification);
+        startForeground(11, notification);
 
         if(Initialization())
             Activate();
@@ -81,11 +77,10 @@ public class IdleChecker extends Service{
     }
 
     private boolean Initialization() {
-        Log.i(TAG, "IdleChecker Initialization.");
-        notificationService = new ToastAndStatusBarNotification(context, "Idle Alert");
-        keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        Log.i(TAG, "MovementChecker Initialization.");
+        notificationService = new ToastNotification(context);
         lastAccelerations = new ArrayDeque<>(milliSecondsInConsideration / sensorSamplingPeriodInMillis);
-        lastMovement = System.currentTimeMillis();
+        keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
 
         // TYPE_LINEAR_ACCELERATION represent phone's acceleration excluding gravity.
         sensorManager = (SensorManager) context.getSystemService(Service.SENSOR_SERVICE);
@@ -99,26 +94,21 @@ public class IdleChecker extends Service{
     }
 
     private void Activate(){
-        Log.i(TAG, "IdleChecker Activate.");
+        Log.i(TAG, "MovementChecker Activate.");
         sensorEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
                 // if phone is locked, nothing to worry about, user is not using phone
-                if(isPhoneLocked()){
-                    userWasUsingPhone = false;
+                if(isPhoneLocked())
                     return;
-                }
+                // if it's unlocked, user probably is using the phone -> try to detect movement
 
-                // if it's unlocked and this measurement is the first one since user starts using, set lastMovement time
-                if(!userWasUsingPhone){
-                    userWasUsingPhone = true;
-                    lastMovement = System.currentTimeMillis();
-                }
-                // if it's not the first measurement, just continue
-
+                // values[0]: Acceleration force along the x axis (excluding gravity).
+                // values[1]: Acceleration force along the y axis (excluding gravity).
+                // values[2]: Acceleration force along the z axis (excluding gravity).
                 double module = Math.sqrt(event.values[0]*event.values[0] + event.values[1]*event.values[1]);
                 module = Math.sqrt(module*module + event.values[2]*event.values[2]);
-                ElaborateAccelerationModule(module);
+                ElaborateTotalAcceleration(module);
             }
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {      }
@@ -129,31 +119,33 @@ public class IdleChecker extends Service{
     }
 
     public void Deactive(){
-        Log.i(TAG, "IdleChecker Deactive.");
+        Log.i(TAG, "MovementChecker Deactive.");
         sensorManager.unregisterListener(sensorEventListener);
     }
-    private void ElaborateAccelerationModule(double accelerationModule) {
-        // if queue is full, pop the oldest one before adding the newest
+
+
+    private void ElaborateTotalAcceleration(double accelerationModule) {
+        // I'm considering only last 5 seconds's movement, that will be 10 sensor measurement
         if(lastAccelerations.size() == milliSecondsInConsideration / sensorSamplingPeriodInMillis){
             sumOfLastAccelerations -= lastAccelerations.remove();
         }
         sumOfLastAccelerations += accelerationModule;
         lastAccelerations.addLast(accelerationModule);
+        Log.i(TAG, "sumOfLastAccelerations : " + sumOfLastAccelerations);
 
-        // IF it's passed more than alertInterval time since lastMovement time, alert and reset lastMovement time.
-        if(System.currentTimeMillis() > lastMovement + alertInterval){
-            Alert("It has been so long, Heads Up and take a break!");
-            lastMovement = System.currentTimeMillis();
-        }
-
-        // IF there had been a movement, reset lastMovement time to current time  <-  if the medium of last 5 measurement > 0.2
-        if(sumOfLastAccelerations / lastAccelerations.size() > 0.2)
-            lastMovement = System.currentTimeMillis();
+        // with test, I found out that event when walking slowly, the medium is above 1.2
+        if( lastAccelerations.size() == milliSecondsInConsideration / sensorSamplingPeriodInMillis
+            && sumOfLastAccelerations / lastAccelerations.size() > 1.2)
+            Alert(AlertMsg);
     }
 
 
     private void Alert(String Alertmsg){
+        // a time check in order to avoid spamming notification
+        if(System.currentTimeMillis()-alertIntervall > lastAlertTimeStamp){
+            lastAlertTimeStamp = System.currentTimeMillis();
             notificationService.sendNotificationToUser(Alertmsg);
+        }
     }
 
     private boolean isPhoneLocked() {

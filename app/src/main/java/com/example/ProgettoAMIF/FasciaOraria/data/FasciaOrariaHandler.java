@@ -1,4 +1,4 @@
-    package com.example.ProgettoAMIF.fasciaoraria.data;
+    package com.example.ProgettoAMIF.FasciaOraria.data;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 
 import com.example.ProgettoAMIF.interfaces.IFasciaOrariaExecutor;
 import com.example.ProgettoAMIF.interfaces.IFasciaOrariaHandler;
-import com.example.ProgettoAMIF.fasciaoraria.model.ExecuteFasciaOrariaReceiver;
-import com.example.ProgettoAMIF.fasciaoraria.model.FasciaOrariaExecutor;
+import com.example.ProgettoAMIF.FasciaOraria.model.ExecuteFasciaOrariaReceiver;
+import com.example.ProgettoAMIF.FasciaOraria.model.FasciaOrariaExecutor;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -138,9 +138,21 @@ public class FasciaOrariaHandler implements IFasciaOrariaHandler, Iterable<Fasci
     }
 
     @Override
-    public void enableFasciaOraria(int ID) {
+    public boolean enableFasciaOraria(int ID) {
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         FasciaOraria target = getFasciaOrariaByID(ID);
+        int targetStartMinute = target.getStartHour()*60 + target.getStartMinute();
+        int targetEndMinute = target.getEndHour()*60 + target.getEndMinute();
+        for ( FasciaOraria fo : list ) {
+            if(fo.isActive()){
+                int fostartMinute = fo.getStartHour()*60 + fo.getStartMinute();
+                int foendMinute = fo.getEndHour()*60 + fo.getEndMinute();
+                if( (targetStartMinute>= fostartMinute && targetStartMinute <= foendMinute) || (targetEndMinute >= fostartMinute && targetEndMinute <=foendMinute) ){
+                    return false;
+                }
+            }
+        }
+
         int startHour = target.getStartHour();
         int startMinute = target.getStartMinute();
         int endHour = target.getEndHour();
@@ -195,7 +207,7 @@ public class FasciaOrariaHandler implements IFasciaOrariaHandler, Iterable<Fasci
             intent.putExtra("RequestCode", ID);
             PendingIntent startExecutor = PendingIntent.getBroadcast(context, ID, intent, 0);
             alarmMgr.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), startExecutor);
-            return;
+            return true;
         }
 
         // altrimenti do intent al Alarm Manager
@@ -221,7 +233,7 @@ public class FasciaOrariaHandler implements IFasciaOrariaHandler, Iterable<Fasci
         alarmMgr.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), stopExecuter);
 
         Log.i(TAG, "Alarm set.");
-        return;
+        return true;
     }
 
     @Override

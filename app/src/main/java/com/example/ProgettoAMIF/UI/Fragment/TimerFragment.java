@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.UI.timer;
+package com.example.ProgettoAMIF.UI.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.ProgettoAMIF.fasciaoraria.data.FasciaOraria;
-import com.example.ProgettoAMIF.fasciaoraria.data.FasciaOrariaHandler;
-import com.example.ProgettoAMIF.fasciaoraria.model.FasciaOrariaListAdapter;
+import com.example.ProgettoAMIF.FasciaOraria.data.FasciaOraria;
+import com.example.ProgettoAMIF.FasciaOraria.data.FasciaOrariaHandler;
+import com.example.ProgettoAMIF.FasciaOraria.FasciaOrariaListAdapter;
 import com.example.eserciziobroadcastreceiver.R;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

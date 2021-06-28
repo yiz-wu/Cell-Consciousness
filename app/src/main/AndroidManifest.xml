@@ -23,17 +23,17 @@
         </activity>
 
 
-        <service android:name="com.example.ProgettoAMIF.fasciaoraria.model.detectors.TouchDetectService" />
-        <service android:name="com.example.ProgettoAMIF.fasciaoraria.model.FasciaOrariaExecutor" />
+        <service android:name="com.example.ProgettoAMIF.FasciaOraria.model.detectors.TouchDetectService" />
+        <service android:name="com.example.ProgettoAMIF.FasciaOraria.model.FasciaOrariaExecutor" />
         <service android:name="com.example.ProgettoAMIF.notificationService.statusBarSystem.CancelNotificationAndGoHomeScreen" />
         <service android:name="com.example.ProgettoAMIF.notificationService.dialogAlertSystem.DialogNotification" />
         <!-- secondary functions -->
-        <service android:name="com.example.ProgettoAMIF.reminders.LightChecker" />
-        <service android:name="com.example.ProgettoAMIF.reminders.MovementChecker" />
-        <service android:name="com.example.ProgettoAMIF.reminders.IdleChecker" />
+        <service android:name="com.example.ProgettoAMIF.Reminders.LightChecker" />
+        <service android:name="com.example.ProgettoAMIF.Reminders.MovementChecker" />
+        <service android:name="com.example.ProgettoAMIF.Reminders.IdleChecker" />
 
-        <receiver android:name="com.example.ProgettoAMIF.reminders.StopRemindersReceiver" />
-        <receiver android:name="com.example.ProgettoAMIF.fasciaoraria.model.ExecuteFasciaOrariaReceiver" />
+        <receiver android:name="com.example.ProgettoAMIF.Reminders.StopRemindersReceiver" />
+        <receiver android:name="com.example.ProgettoAMIF.FasciaOraria.model.ExecuteFasciaOrariaReceiver" />
 
     </application>
 

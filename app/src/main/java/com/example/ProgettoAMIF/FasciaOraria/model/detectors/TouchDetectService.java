@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.fasciaoraria.model.detectors;
+package com.example.ProgettoAMIF.FasciaOraria.model.detectors;
 
 import android.app.Service;
 import android.content.Context;
@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 
 import com.example.ProgettoAMIF.interfaces.ITouchDetector;
 import com.example.eserciziobroadcastreceiver.R;
-import com.example.ProgettoAMIF.fasciaoraria.model.FasciaOrariaExecutor;
+import com.example.ProgettoAMIF.FasciaOraria.model.FasciaOrariaExecutor;
 
 public class TouchDetectService extends Service implements ITouchDetector {
 

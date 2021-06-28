@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_timer"
-        android:name="com.example.ProgettoAMIF.UI.timer.TimerFragment"
+        android:name="com.example.ProgettoAMIF.UI.Fragment.TimerFragment"
         android:label="@string/navbar_timer"
         tools:layout="@layout/fragment_timer" />
 
     <fragment
         android:id="@+id/navigation_reminder"
-        android:name="com.example.ProgettoAMIF.UI.reminder.ReminderFragment"
+        android:name="com.example.ProgettoAMIF.UI.Fragment.ReminderFragment"
         android:label="@string/navbar_reminder"
         tools:layout="@layout/fragment_reminder" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.ProgettoAMIF.UI.profile.ProfileFragment"
+        android:name="com.example.ProgettoAMIF.UI.Fragment.ProfileFragment"
         android:label="@string/navbar_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

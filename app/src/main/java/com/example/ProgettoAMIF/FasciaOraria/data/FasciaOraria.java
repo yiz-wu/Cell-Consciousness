@@ -1,4 +1,4 @@
-package com.example.ProgettoAMIF.fasciaoraria.data;
+package com.example.ProgettoAMIF.FasciaOraria.data;
 
 
 public class FasciaOraria {
